@@ -1,0 +1,50 @@
+generated: '2026-07-24'
+method: searched
+source: >-
+  https://thetuvaproject.com (Getting Started, Connectors, FHIR mapping guide) +
+  https://github.com/tuva-health
+note: >-
+  Tuva is a warehouse-native data-transformation platform, not an HTTP API, so
+  the API-security standards (OAuth2/OIDC/FAPI) are N/A. Conformance here asserts
+  the healthcare data standards and formats Tuva ingests, harmonizes, and
+  implements. "conforms: true" means Tuva documents first-class support for that
+  standard as an input format or implements the measure/grouper it names.
+standards:
+  - id: hl7-fhir-r4
+    conforms: true
+    evidence: >-
+      FHIR R4 JSON bundles/resources are a supported input format; FHIR Inferno
+      flattens them and the fhir_preprocessing connector maps them into the Tuva
+      Input Layer.
+  - id: x12-837-claims
+    conforms: true
+    evidence: >-
+      Medical and pharmacy claims (837-shaped) are core Input Layer formats
+      normalized into the Core Data Model.
+  - id: hl7-adt
+    conforms: true
+    evidence: ADT feeds are a documented clinical input source for encounters.
+  - id: cms-cclf
+    conforms: true
+    evidence: The Medicare CCLF connector maps CMS CCLF claims into the Input Layer.
+  - id: cms-bcda
+    conforms: true
+    evidence: The BCDA connector ingests CMS Beneficiary Claims Data API extracts.
+  - id: cms-hcc
+    conforms: true
+    evidence: The cms_hcc data mart implements the CMS HCC risk-adjustment model.
+  - id: ahrq-quality-indicators
+    conforms: true
+    evidence: The ahrq_measures / AHRQ Quality Indicators data marts implement AHRQ measures.
+  - id: ccsr
+    conforms: true
+    evidence: The ccsr data mart implements the AHRQ Clinical Classifications Software Refined groupings.
+  - id: dbt-package
+    conforms: true
+    evidence: Distributed as a dbt package on dbt Hub; requires dbt >= 1.10.0.
+  - id: oauth2
+    conforms: false
+    evidence: N/A - no hosted HTTP API surface.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: N/A - no HTTP API surface.

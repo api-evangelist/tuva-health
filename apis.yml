@@ -15,7 +15,7 @@ description: >-
   supported input format that Tuva flattens and maps into its Input Layer, not a live FHIR
   server it operates. The company pairs the open-source project with a commercial Core
   Platform. Home market is the United States.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://www.tuvahealth.com/img/TuvaHealthLogo-White@4x.png
 tags:
 - Healthcare
 - United States
@@ -88,6 +88,8 @@ apis:
   - type: SourceCode
     url: https://github.com/tuva-health/connector_template
 common:
+- type: DomainSecurity
+  url: security/tuva-health-domain-security.yml
 - type: Website
   url: https://www.tuvahealth.com
 - type: DeveloperPortal
@@ -102,6 +104,20 @@ common:
   url: https://www.linkedin.com/company/tuva-health
 - type: Package
   url: https://hub.getdbt.com/tuva-health/the_tuva_project/latest/
+- type: Packages
+  url: packages/tuva-health-packages.yml
+- type: SDKs
+  url: packages/tuva-health-packages.yml
+- type: DataModel
+  url: data-model/tuva-health-data-model.yml
+- type: Conformance
+  url: conformance/tuva-health-conformance.yml
+- type: ChangeLog
+  url: changelog/tuva-health-changelog.yml
+- type: LLMsTxt
+  url: llms/tuva-health-llms.txt
+- type: Blog
+  url: https://thetuvaproject.substack.com
 - type: Pricing
   url: https://www.tuvahealth.com/pricing
 - type: Support

@@ -1,0 +1,31 @@
+generated: '2026-07-24'
+method: searched
+source: https://github.com/tuva-health/tuva-core/releases
+scheme: semver
+current_version: 0.18.0
+note: >-
+  Releases are cut against the tuva-core repository and published as the
+  the_tuva_project dbt package on dbt Hub. Release-candidate (-rc) tags precede
+  each minor/patch. Recent window only; see the releases page for full history.
+entries:
+  - version: v0.18.0
+    date: '2026-05-07'
+    name: the_tuva_project v0.18.0
+  - version: v0.18.0-rc
+    date: '2026-04-24'
+    name: the_tuva_project v0.18.0-rc
+  - version: v0.17.2
+    date: '2026-04-02'
+    name: the_tuva_project v0.17.2
+  - version: v0.17.1
+    date: '2026-03-12'
+    name: the_tuva_project v0.17.1
+  - version: v0.17.0
+    date: '2026-02-12'
+    name: the_tuva_project v0.17.0
+  - version: v0.16.2
+    date: '2026-02-05'
+    name: the_tuva_project v0.16.2
+  - version: v0.16.1
+    date: '2026-01-30'
+    name: the_tuva_project v0.16.1

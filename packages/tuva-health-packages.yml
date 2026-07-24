@@ -1,0 +1,54 @@
+generated: '2026-07-24'
+method: searched
+source: https://hub.getdbt.com/tuva-health/ + https://github.com/tuva-health
+note: >-
+  Tuva ships warehouse-native dbt packages (installed via dbt Hub / packages.yml)
+  plus a Python preprocessing utility. There is no hosted HTTP/FHIR API, so these
+  dbt packages and the Python utility ARE the first-party distributed client
+  libraries. The PyPI package named "tuva" belongs to an unrelated vendor
+  (tuva.ai) and is intentionally excluded.
+packages:
+  - language: sql
+    ecosystem: dbt
+    registry: dbt Hub
+    name: tuva-health/the_tuva_project
+    version: 0.18.0
+    url: https://hub.getdbt.com/tuva-health/the_tuva_project/latest/
+    install: |
+      packages:
+        - package: tuva-health/the_tuva_project
+          version: 0.18.0
+    source: https://github.com/tuva-health/tuva-core
+    official: true
+  - language: sql
+    ecosystem: dbt
+    registry: dbt Hub
+    name: tuva-health/readmissions
+    url: https://hub.getdbt.com/tuva-health/readmissions/latest/
+    install: |
+      packages:
+        - package: tuva-health/readmissions
+    source: https://github.com/tuva-health/readmissions
+    official: true
+  - language: sql
+    ecosystem: dbt
+    registry: dbt Hub
+    name: tuva-health/tuva_chronic_conditions
+    url: https://hub.getdbt.com/tuva-health/tuva_chronic_conditions/latest/
+    install: |
+      packages:
+        - package: tuva-health/tuva_chronic_conditions
+    source: https://github.com/tuva-health/cms_chronic_conditions
+    official: true
+  - language: python
+    ecosystem: python
+    registry: github
+    name: FHIR_inferno
+    url: https://github.com/tuva-health/FHIR_inferno
+    install: git clone https://github.com/tuva-health/FHIR_inferno
+    source: https://github.com/tuva-health/FHIR_inferno
+    official: true
+    note: >-
+      Command-line Python utility that flattens nested HL7 FHIR JSON into flat
+      CSV files for loading into the Tuva Input Layer. Distributed via GitHub;
+      not published to PyPI.

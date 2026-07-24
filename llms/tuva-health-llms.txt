@@ -1,0 +1,32 @@
+# Tuva Health
+
+> Tuva Health, Inc. is a US healthcare data company behind The Tuva Project, an open-source, warehouse-native data-transformation platform that harmonizes, validates, normalizes, and enriches raw healthcare data (medical and pharmacy claims, EHR clinical data, ADT feeds, HL7 FHIR) into an analytics-ready Core Data Model and a library of Data Marts. It runs as a dbt package plus Python utilities inside the customer's own cloud data warehouse (Snowflake, Databricks, BigQuery, Redshift, Microsoft Fabric) — it is open-source software, not a hosted HTTP or FHIR API.
+
+## Products
+- [The Tuva Project (dbt package)](https://thetuvaproject.com/getting-started): Core open-source dbt package transforming Input Layer data into the Core Data Model and Data Marts.
+- [FHIR Inferno](https://github.com/tuva-health/FHIR_inferno): Python CLI that flattens nested HL7 FHIR JSON into flat CSV files for the Input Layer.
+- [Tuva Connectors](https://thetuvaproject.com/connectors/overview): dbt connector projects (Medicare CCLF, BCDA, CMS synthetic, Aetna, Epic, eClinicalWorks, and a template) that map raw source formats into the Input Layer.
+
+## Docs
+- [Getting Started](https://thetuvaproject.com/getting-started)
+- [Core Data Model](https://thetuvaproject.com/core-data-model)
+- [Connectors Overview](https://thetuvaproject.com/connectors/overview)
+- [FHIR mapping guide](https://thetuvaproject.com/guides/mapping/fhir)
+
+## Distribution
+- [dbt Hub — the_tuva_project 0.18.0](https://hub.getdbt.com/tuva-health/the_tuva_project/latest/)
+- [GitHub organization](https://github.com/tuva-health)
+- [Releases / changelog](https://github.com/tuva-health/tuva-core/releases)
+
+## Repo artifacts
+- [Packages](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/packages/tuva-health-packages.yml)
+- [Data model / ERD](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/data-model/tuva-health-data-model.yml)
+- [Conformance](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/conformance/tuva-health-conformance.yml)
+- [Changelog](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/changelog/tuva-health-changelog.yml)
+- [Domain security](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/security/tuva-health-domain-security.yml)
+
+## Community
+- [Slack community](https://join.slack.com/t/thetuvaproject/shared_invite/zt-35dtjo7sz-QnTKVZJaEErr35cxFZ2QMA)
+- [Newsletter (Substack)](https://thetuvaproject.substack.com/)
+- [YouTube](https://www.youtube.com/@thetuvaproject)
+- [Company website](https://www.tuvahealth.com)

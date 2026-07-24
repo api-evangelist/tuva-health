@@ -1,0 +1,129 @@
+generated: '2026-07-24'
+method: derived
+source: >-
+  https://github.com/tuva-health/tuva-core/tree/main/models/core (core_models.yml)
+  + models/input_layer + models/data_marts + https://thetuvaproject.com/core-data-model
+note: >-
+  The Tuva Core Data Model unifies claims and clinical data into a single
+  longitudinal patient record. person_id is the globally unique person
+  identifier that links records across all source systems and is the hub of the
+  model; patient_id is source-system-scoped. Entities derived from the published
+  core__ final models and their identifier/foreign-key columns.
+hub_key:
+  field: person_id
+  description: >-
+    Globally unique, stable person identifier created via
+    core__person_id_crosswalk; present on every clinical and claims entity.
+entities:
+  - name: patient
+    model: core__patient
+    primary_key: person_id
+    relationships: []
+  - name: person_id_crosswalk
+    model: core__person_id_crosswalk
+    primary_key: person_id
+    note: Maps source-system patient_id values to the unified person_id.
+    relationships:
+      - type: has_many
+        target: patient
+        via: patient_id
+  - name: eligibility
+    model: core__eligibility
+    primary_key: eligibility_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+  - name: member_months
+    model: core__member_months
+    primary_key: null
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+      - {type: belongs_to, target: eligibility, via: member_id}
+  - name: medical_claim
+    model: core__medical_claim
+    primary_key: claim_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+      - {type: has_many, target: procedure, via: claim_id}
+      - {type: has_many, target: condition, via: claim_id}
+  - name: pharmacy_claim
+    model: core__pharmacy_claim
+    primary_key: claim_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+  - name: encounter
+    model: core__encounter
+    primary_key: encounter_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+      - {type: has_many, target: condition, via: encounter_id}
+      - {type: has_many, target: procedure, via: encounter_id}
+      - {type: has_many, target: observation, via: encounter_id}
+  - name: condition
+    model: core__condition
+    primary_key: condition_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+      - {type: belongs_to, target: encounter, via: encounter_id}
+      - {type: belongs_to, target: medical_claim, via: claim_id}
+  - name: procedure
+    model: core__procedure
+    primary_key: procedure_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+      - {type: belongs_to, target: encounter, via: encounter_id}
+      - {type: belongs_to, target: medical_claim, via: claim_id}
+  - name: observation
+    model: core__observation
+    primary_key: observation_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+      - {type: belongs_to, target: encounter, via: encounter_id}
+  - name: lab_result
+    model: core__lab_result
+    primary_key: lab_result_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+  - name: medication
+    model: core__medication
+    primary_key: medication_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+      - {type: belongs_to, target: encounter, via: encounter_id}
+  - name: immunization
+    model: core__immunization
+    primary_key: immunization_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+  - name: appointment
+    model: core__appointment
+    primary_key: appointment_id
+    relationships:
+      - {type: belongs_to, target: patient, via: person_id}
+      - {type: belongs_to, target: encounter, via: encounter_id}
+      - {type: belongs_to, target: location, via: location_id}
+      - {type: belongs_to, target: practitioner, via: practitioner_id}
+  - name: practitioner
+    model: core__practitioner
+    primary_key: practitioner_id
+    relationships: []
+  - name: location
+    model: core__location
+    primary_key: location_id
+    relationships: []
+data_marts:
+  - ahrq_measures
+  - benchmarks
+  - ccsr
+  - chronic_conditions
+  - clinical_concept_library
+  - cms_hcc
+  - ed_classification
+  - fhir_preprocessing
+  - financial_pmpm
+  - hcc_recapture
+  - hcc_suspecting
+  - pharmacy
+  - provider_attribution
+  - quality_measures
+  - readmissions
+  - semantic_layer
