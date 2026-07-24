@@ -1,0 +1,111 @@
+aid: tuva-health
+url: https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/apis.yml
+name: Tuva Health
+kind: company
+description: >-
+  Tuva Health, Inc. is a United States healthcare data company behind The Tuva Project, an
+  open-source, warehouse-native data-transformation platform that harmonizes, validates,
+  normalizes, and enriches raw healthcare data - medical and pharmacy claims, EHR clinical
+  data, ADT feeds, and HL7 FHIR sources - into an analytics-ready Core Data Model and a
+  library of Data Marts (AHRQ measures, readmissions, quality measures, chronic conditions,
+  CCSR, pharmacy). It is delivered primarily as a dbt package plus Python utilities (FHIR
+  Inferno) and a family of source connectors that run inside the customer's own cloud data
+  warehouse - Snowflake, Databricks, Google BigQuery, Amazon Redshift, or Microsoft Fabric -
+  rather than as a hosted service. Tuva is not an HTTP or FHIR API vendor: FHIR R4 is a
+  supported input format that Tuva flattens and maps into its Input Layer, not a live FHIR
+  server it operates. The company pairs the open-source project with a commercial Core
+  Platform. Home market is the United States.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Healthcare
+- United States
+- Health Data
+- FHIR
+- Interoperability
+- Data Analytics
+- Data Transformation
+- Claims
+- Open Source
+- dbt
+created: '2026-07-24'
+modified: '2026-07-24'
+specificationVersion: '0.19'
+apis:
+- aid: tuva-health:the-tuva-project
+  name: The Tuva Project (dbt package)
+  description: >-
+    The core open-source Tuva dbt package that transforms healthcare data from the Tuva Input
+    Layer into the Tuva Core Data Model and Data Marts, including data-quality tests,
+    normalization, claims preprocessing, and bundled terminology sets. Distributed as a dbt
+    package (dbt Hub / GitHub) that runs inside the customer's cloud data warehouse - it is
+    open-source software, not a hosted HTTP or FHIR API.
+  humanURL: https://thetuvaproject.com/getting-started
+  tags:
+  - Data Transformation
+  - dbt
+  - Healthcare
+  properties:
+  - type: Documentation
+    url: https://thetuvaproject.com/getting-started
+  - type: APIReference
+    url: https://thetuvaproject.com/core-data-model
+  - type: Package
+    url: https://hub.getdbt.com/tuva-health/the_tuva_project/latest/
+  - type: SourceCode
+    url: https://github.com/tuva-health/tuva
+- aid: tuva-health:fhir-inferno
+  name: FHIR Inferno
+  description: >-
+    An open-source Python utility that flattens nested HL7 FHIR JSON (bundles / resources) into
+    tabular CSV files so FHIR-sourced data can be loaded and mapped into the Tuva Input Layer.
+    A command-line data-preprocessing tool, not a FHIR server or HTTP API - it consumes FHIR
+    rather than serving it.
+  humanURL: https://github.com/tuva-health/fhir_inferno
+  tags:
+  - FHIR
+  - Data Transformation
+  - Python
+  properties:
+  - type: Documentation
+    url: https://thetuvaproject.com/guides/mapping/fhir
+  - type: SourceCode
+    url: https://github.com/tuva-health/fhir_inferno
+- aid: tuva-health:tuva-connectors
+  name: Tuva Connectors
+  description: >-
+    A family of open-source dbt connector projects (Medicare CCLF, BCDA, CMS synthetic, Aetna,
+    BCBS, and a connector template, plus a FHIR preprocessing connector) that map raw
+    claims, EHR, ADT, and FHIR source formats into the standardized Tuva Input Layer. These
+    are warehouse-native dbt projects, not HTTP API endpoints.
+  humanURL: https://thetuvaproject.com/connectors/overview
+  tags:
+  - Connectors
+  - Claims
+  - Interoperability
+  properties:
+  - type: Documentation
+    url: https://thetuvaproject.com/connectors/overview
+  - type: SourceCode
+    url: https://github.com/tuva-health/connector_template
+common:
+- type: Website
+  url: https://www.tuvahealth.com
+- type: DeveloperPortal
+  url: https://thetuvaproject.com
+- type: Documentation
+  url: https://thetuvaproject.com/getting-started
+- type: GettingStarted
+  url: https://thetuvaproject.com/getting-started
+- type: GitHubOrganization
+  url: https://github.com/tuva-health
+- type: LinkedIn
+  url: https://www.linkedin.com/company/tuva-health
+- type: Package
+  url: https://hub.getdbt.com/tuva-health/the_tuva_project/latest/
+- type: Pricing
+  url: https://www.tuvahealth.com/pricing
+- type: Support
+  url: https://www.tuvahealth.com/contact
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

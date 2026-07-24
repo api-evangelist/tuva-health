@@ -1,0 +1,104 @@
+aid: tuva-health
+name: Tuva Health
+review:
+  question: Does Tuva Health expose a documented public HTTP or FHIR API?
+  answer: false
+  date: '2026-07-24'
+  reviewer: API Evangelist
+  homeMarket: United States
+findings:
+  summary: |
+    Tuva Health does not publish a public HTTP REST API or a FHIR server. Tuva
+    Health, Inc. is the company behind The Tuva Project, an open-source,
+    warehouse-native healthcare data-transformation platform delivered as a dbt
+    package plus Python utilities and source connectors that run inside the
+    customer's own cloud data warehouse (Snowflake, Databricks, Google BigQuery,
+    Amazon Redshift, Microsoft Fabric). The developer surface is a documentation
+    site (thetuvaproject.com) and a public GitHub organization (github.com/tuva-health),
+    not an API host. HL7 FHIR R4 is a supported INPUT format only: the FHIR Inferno
+    Python tool flattens nested FHIR JSON into CSV and a FHIR preprocessing dbt
+    package maps it into the Tuva Input Layer. No FHIR CapabilityStatement / metadata
+    endpoint, no SMART-on-FHIR .well-known/smart-configuration, and no OpenAPI /
+    Swagger document is served. There is therefore no OAuth/SMART auth surface,
+    because there is no hosted HTTP API to authenticate against.
+  developerPortal:
+    url: https://thetuvaproject.com
+    status: 200
+    type: docs-site
+    note: Open-source documentation site (Docusaurus-style). Live and self-serve; not an API console.
+  fhirCapabilityStatement:
+    present: false
+    note: Probed api.tuvahealth.com/metadata (host does not resolve) and thetuvaproject.com paths; no FHIR CapabilityStatement is served. Tuva consumes FHIR, it does not host a FHIR server.
+  smartConfiguration:
+    present: false
+    note: .well-known/smart-configuration returned 404 on www.tuvahealth.com and does not exist on thetuvaproject.com.
+  downloadableSpecs:
+    count: 0
+    note: No OpenAPI/Swagger (openapi.json, swagger.json, /api-docs) and no FHIR metadata JSON were found to harvest. Nothing saved verbatim because no machine-readable API contract is published.
+  authModel:
+    scheme: none
+    note: No HTTP API means no API key, OAuth2 client-credentials, SMART-on-FHIR scopes, or mTLS. Access to source code is via GitHub / dbt Hub (open source); the commercial Core Platform is a sales-gated engagement.
+  standardsConformance:
+    usCore: false
+    daVinci: false
+    carinBlueButton: false
+    ukCore: false
+    auCore: false
+    note: >-
+      Tuva is not a US Core / Da Vinci / CARIN FHIR server. It maps FHIR R4 as an input
+      and standardizes to a proprietary Core Data Model, leaning on US healthcare code
+      systems and terminology (SNOMED-CT, RxNorm, ICD-10, DRG, CCSR, AHRQ) bundled as
+      data assets.
+  distribution:
+    model: open-source + commercial
+    note: The Tuva Project (dbt package, connectors, FHIR Inferno) is open source and self-serve via GitHub / dbt Hub. The commercial Core Platform is a paid, sales-gated offering (pricing page live).
+  transports:
+    - protocol: dbt / SQL
+      scheme: warehouse-native
+      documented: true
+      note: Transformations run as a dbt package inside the customer's cloud data warehouse. No network API transport.
+    - protocol: CLI
+      scheme: local
+      documented: true
+      note: FHIR Inferno is a Python command-line utility that flattens FHIR JSON to CSV. Local execution, not a service.
+    - protocol: REST
+      scheme: https
+      documented: false
+      note: No public HTTP REST API is documented or served.
+    - protocol: FHIR
+      scheme: https
+      documented: false
+      note: No hosted FHIR server, CapabilityStatement, or SMART-on-FHIR configuration.
+sources:
+  - url: https://www.tuvahealth.com/platform
+    type: Documentation
+    status: 200
+    note: Describes the Core Platform's seven layers (Input, Data Quality, Normalization, Claims Preprocessing, Core Data Model, Data Marts, Data Assets). FHIR listed as a supported source; no API endpoints.
+  - url: https://thetuvaproject.com
+    type: DeveloperPortal
+    status: 200
+    note: Open-source documentation site. Navigation is dbt-package oriented (getting-started, input-layer, core-data-model, data-marts, connectors, terminology); no REST/FHIR API reference.
+  - url: https://thetuvaproject.com/guides/mapping/fhir
+    type: Documentation
+    status: 200
+    note: Describes converting FHIR into Tuva via FHIR Inferno + FHIR preprocessing dbt package. FHIR is input, not a served API.
+  - url: https://github.com/tuva-health
+    type: GitHubOrganization
+    status: 200
+    note: Public org with tuva-core, fhir_inferno, fhir_preprocessing, and many source connectors and data-mart dbt packages.
+  - url: https://hub.getdbt.com/tuva-health/the_tuva_project/latest/
+    type: Package
+    status: 200
+    note: The Tuva Project published as an installable dbt package.
+actions:
+  openapiHarvested: false
+  specsSaved: 0
+  apisYmlUpdated: true
+  reason: |
+    No HTTP/FHIR API, CapabilityStatement, SMART configuration, or OpenAPI exists to
+    harvest. apis.yml catalogs the real, documented open-source developer products
+    (The Tuva Project dbt package, FHIR Inferno, Tuva Connectors) with humanURLs to
+    live docs and source, and deliberately assigns no baseURL because none is served.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
