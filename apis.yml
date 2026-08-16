@@ -11,10 +11,13 @@ description: >-
   CCSR, pharmacy). It is delivered primarily as a dbt package plus Python utilities (FHIR
   Inferno) and a family of source connectors that run inside the customer's own cloud data
   warehouse - Snowflake, Databricks, Google BigQuery, Amazon Redshift, or Microsoft Fabric -
-  rather than as a hosted service. Tuva is not an HTTP or FHIR API vendor: FHIR R4 is a
-  supported input format that Tuva flattens and maps into its Input Layer, not a live FHIR
-  server it operates. The company pairs the open-source project with a commercial Core
-  Platform. Home market is the United States.
+  rather than as a hosted service. Tuva is not a FHIR API vendor: FHIR R4 is a supported
+  input format that Tuva flattens and maps into its Input Layer, not a live FHIR server it
+  operates. It does ship one HTTP API - Tuva EMPI, an Apache-2.0 enterprise master patient
+  index with a documented OpenAPI 3.0.3 contract - but that too is customer-deployed from
+  OCI images, so there is no Tuva-operated API host. The company pairs the open-source
+  project with a commercial Core Platform and named services. Home market is the United
+  States.
 image: https://www.tuvahealth.com/img/TuvaHealthLogo-White@4x.png
 tags:
 - Healthcare
@@ -27,8 +30,10 @@ tags:
 - Claims
 - Open Source
 - dbt
+- EMPI
+- Patient Matching
 created: '2026-07-24'
-modified: '2026-07-24'
+modified: '2026-08-15'
 specificationVersion: '0.19'
 apis:
 - aid: tuva-health:the-tuva-project
@@ -87,6 +92,39 @@ apis:
     url: https://thetuvaproject.com/connectors/overview
   - type: SourceCode
     url: https://github.com/tuva-health/connector_template
+- aid: tuva-health:tuva-empi
+  name: Tuva EMPI API
+  description: >-
+    The HTTP API of Tuva EMPI, Tuva Health's open-source (Apache-2.0) enterprise master
+    patient index. A containerized Django backend that ingests person records, runs
+    Splink-based probabilistic matching, and lets reviewers adjudicate potential matches
+    into unified person IDs. Twelve JSON operations under /api/v1 cover configuration,
+    data sources, person-record import/export, persons, potential matches, match creation,
+    users and a health check. Tuva EMPI is customer-deployed - the OCI images run in the
+    customer's own Kubernetes cluster or via Docker Compose - so there is no Tuva-operated
+    base URL; the host is whatever the customer deploys it to.
+  humanURL: https://tuva-health.github.io/tuva_empi/
+  baseURL: https://{tuva-empi-host}/api/v1
+  tags:
+  - EMPI
+  - Patient Matching
+  - Healthcare
+  - Open Source
+  properties:
+  - type: OpenAPI
+    url: openapi/tuva-health-empi-openapi.yml
+  - type: Documentation
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started
+  - type: APIReference
+    url: https://tuva-health.github.io/tuva_empi/api-docs/
+  - type: GettingStarted
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started/local-demo-environment
+  - type: SourceCode
+    url: https://github.com/tuva-health/tuva_empi
+  - type: Authentication
+    url: authentication/tuva-health-authentication.yml
+  - type: Overlay
+    url: overlays/tuva-health-empi-overlay.yaml
 common:
 - type: DomainSecurity
   url: security/tuva-health-domain-security.yml
@@ -118,10 +156,39 @@ common:
   url: llms/tuva-health-llms.txt
 - type: Blog
   url: https://thetuvaproject.substack.com
-- type: Pricing
-  url: https://www.tuvahealth.com/pricing
 - type: Support
   url: https://www.tuvahealth.com/contact
+- type: TermsOfService
+  url: https://www.tuvahealth.com/terms
+- type: PrivacyPolicy
+  url: https://www.tuvahealth.com/privacy
+- type: APIReference
+  url: https://tuva-health.github.io/tuva_empi/api-docs/
+- type: Authentication
+  url: authentication/tuva-health-authentication.yml
+- type: Conventions
+  url: conventions/tuva-health-conventions.yml
+- type: Lifecycle
+  url: lifecycle/tuva-health-lifecycle.yml
+- type: Deprecation
+  url: https://tuva-health.github.io/tuva_empi/docs/releases
+- type: Sandbox
+  url: sandbox/tuva-health-sandbox.yml
+- type: CLI
+  url: cli/tuva-health-cli.yml
+- type: Plans
+  url: plans/tuva-health-plans-pricing.yml
+- type: Overlay
+  url: overlays/tuva-health-empi-overlay.yaml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Community
+  url: https://thetuvaproject.com/community/community-overview
+x-enrichment:
+  date: '2026-08-15'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
