@@ -1,21 +1,26 @@
-generated: '2026-07-24'
+generated: '2026-08-15'
 method: searched
 source: >-
   https://thetuvaproject.com (Getting Started, Connectors, FHIR mapping guide) +
-  https://github.com/tuva-health
+  https://github.com/tuva-health + https://tuva-health.github.io/tuva_empi/docs/configuration
+  + openapi/tuva-health-empi-openapi.yml
 note: >-
-  Tuva is a warehouse-native data-transformation platform, not an HTTP API, so
-  the API-security standards (OAuth2/OIDC/FAPI) are N/A. Conformance here asserts
-  the healthcare data standards and formats Tuva ingests, harmonizes, and
-  implements. "conforms: true" means Tuva documents first-class support for that
-  standard as an input format or implements the measure/grouper it names.
+  Tuva is primarily a warehouse-native data-transformation platform, so most of
+  this file asserts the healthcare data standards and formats Tuva ingests,
+  harmonizes and implements. "conforms: true" means Tuva documents first-class
+  support for that standard as an input format, or implements the measure/grouper
+  it names. The 2026-08-15 round added one genuine HTTP surface - the Tuva EMPI
+  API (openapi/tuva-health-empi-openapi.yml) - so the API-side standards below are
+  now assessed against a real contract rather than marked N/A.
+  NO compliance program (SOC 2 / ISO 27001 / HIPAA attestation) is published
+  anywhere on tuvahealth.com, so no Compliance pointer is emitted in apis.yml.
 standards:
   - id: hl7-fhir-r4
     conforms: true
     evidence: >-
       FHIR R4 JSON bundles/resources are a supported input format; FHIR Inferno
       flattens them and the fhir_preprocessing connector maps them into the Tuva
-      Input Layer.
+      Input Layer. Tuva consumes FHIR; it does not serve a FHIR API.
   - id: x12-837-claims
     conforms: true
     evidence: >-
@@ -30,21 +35,76 @@ standards:
   - id: cms-bcda
     conforms: true
     evidence: The BCDA connector ingests CMS Beneficiary Claims Data API extracts.
+  - id: cms-lds
+    conforms: true
+    evidence: The medicare_lds_connector maps Medicare LDS claims into the Input Layer.
   - id: cms-hcc
     conforms: true
     evidence: The cms_hcc data mart implements the CMS HCC risk-adjustment model.
+  - id: cms-chronic-conditions
+    conforms: true
+    evidence: The cms_chronic_conditions package implements the CMS Chronic Conditions Warehouse grouper.
   - id: ahrq-quality-indicators
     conforms: true
-    evidence: The ahrq_measures / AHRQ Quality Indicators data marts implement AHRQ measures.
+    evidence: The ahrq_measures / ahrq_quality_indicators data marts implement AHRQ measures.
   - id: ccsr
     conforms: true
     evidence: The ccsr data mart implements the AHRQ Clinical Classifications Software Refined groupings.
+  - id: hedis-stars
+    conforms: partial
+    evidence: >-
+      The quality_measures mart and the commercial "HEDIS & Stars" product are
+      HEDIS-ORIENTED (the provider's own AGENTS.md says "HEDIS-oriented marts");
+      no NCQA measure certification is published.
   - id: dbt-package
     conforms: true
     evidence: Distributed as a dbt package on dbt Hub; requires dbt >= 1.10.0.
+  - id: openapi-3
+    conforms: true
+    evidence: >-
+      Tuva EMPI publishes an OpenAPI 3.0.3 document (12 operations, 31 schemas) at
+      docs/resources/tuva-empi-api-schema.yaml in tuva-health/tuva_empi, rendered
+      at https://tuva-health.github.io/tuva_empi/api-docs/.
+  - id: oidc
+    conforms: true
+    evidence: >-
+      Tuva EMPI authenticates by validating an OIDC-issued JWT against a
+      configured JWKS URL, client ID and audience; supported IdP backends are
+      Keycloak and AWS Cognito. Documented in the EMPI configuration reference,
+      NOT declared in the OpenAPI.
   - id: oauth2
-    conforms: false
-    evidence: N/A - no hosted HTTP API surface.
+    conforms: partial
+    evidence: >-
+      The reference deployment fronts the API with oauth2-proxy, but Tuva operates
+      no authorization server of its own and the spec declares no oauth2
+      securityScheme or scopes - the OAuth2 surface belongs to the customer's IdP.
   - id: rfc9457-problem-details
     conforms: false
-    evidence: N/A - no HTTP API surface.
+    evidence: >-
+      The EMPI OpenAPI declares no 4xx/5xx responses at all and no
+      application/problem+json media type. See errors/tuva-health-problem-types.yml.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset/Deprecation header support; the API declares no response headers.
+  - id: asyncapi
+    conforms: false
+    evidence: N/A - Tuva publishes no event, streaming or webhook surface.
+  - id: mcp
+    conforms: false
+    evidence: N/A - no MCP server is published. See mcp/tuva-health-mcp.yml.
+  - id: a2a
+    conforms: false
+    evidence: >-
+      No agent card is served. /.well-known/agent-card.json and
+      /.well-known/agent.json return 404 on every Tuva host
+      (see well-known/tuva-health-well-known.yml).
+compliance_program:
+  published: false
+  evidence:
+    - {url: 'https://www.tuvahealth.com/trust', status: 404}
+    - {url: 'https://www.tuvahealth.com/security', status: 404}
+    - {url: 'https://www.tuvahealth.com/sitemap.xml', status: 200, note: 'no trust, security or compliance URL among the 34 published pages'}
+  note: >-
+    For a company whose product handles PHI in customer warehouses, the absence
+    of any published security/trust page is itself the finding. See
+    security/tuva-health-domain-security.yml for what could be measured.

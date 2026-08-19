@@ -1,0 +1,32 @@
+generated: '2026-08-15'
+method: derived
+source: openapi/tuva-health-empi-openapi.yml
+format: undeclared
+problem_count: 0
+note: >-
+  HONEST ZERO. The published Tuva EMPI OpenAPI 3.0.3 declares exactly one
+  response per operation - "200" - across all 12 operations. There is no 4xx or
+  5xx response, no application/problem+json media type, and no error schema in
+  components.schemas. Nothing was derivable and nothing was invented. A search
+  of the EMPI documentation (getting-started, configuration, architecture) and
+  of thetuvaproject.com found no error-code reference to enrich this with
+  either.
+  No ErrorCatalog pointer is emitted in apis.yml: pointing at an empty catalog
+  would credit Tuva with published error semantics it does not have.
+searched:
+  - {url: 'https://tuva-health.github.io/tuva_empi/', result: no error reference}
+  - {url: 'https://tuva-health.github.io/tuva_empi/api-docs/', result: renders the same spec - 200-only}
+  - {url: 'https://thetuvaproject.com/', result: dbt/warehouse docs - no HTTP error surface}
+problems: []
+gaps:
+  - >-
+    All 12 operations are missing 4xx responses. Authentication is enforced by a
+    proxy plus JWT validation, so 401/403 are certain to occur at runtime and are
+    entirely undocumented.
+  - >-
+    ImportPersonRecordsRequest / ExportPersonRecordsRequest take an s3_uri whose
+    validation ("Mixin for validating S3 URIs") clearly can fail; no validation
+    error response is declared.
+  - >-
+    Adopting RFC 9457 application/problem+json and declaring 400/401/403/404/409
+    per operation would move this artifact from an empty file to a real catalog.

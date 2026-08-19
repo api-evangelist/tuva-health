@@ -1,0 +1,86 @@
+generated: '2026-08-15'
+method: derived
+source: openapi/tuva-health-empi-openapi.yml
+docs: https://tuva-health.github.io/tuva_empi/docs/configuration
+scope: Tuva EMPI API (the only HTTP API Tuva Health publishes)
+note: >-
+  Cross-cutting runtime semantics for the Tuva EMPI API, derived from the
+  published OpenAPI 3.0.3 contract and the EMPI deployment documentation.
+  Several sections record an ABSENCE - the contract genuinely does not define
+  idempotency, pagination, tracing or rate-limit semantics. Those are recorded
+  as supported: false rather than omitted, because "not offered" and
+  "not checked" are different facts.
+authentication:
+  style: bearer-jwt-on-forwarded-header
+  header: X-Forwarded-Access-Token
+  declared_in_spec: false
+  detail: authentication/tuva-health-authentication.yml
+idempotency:
+  supported: false
+  evidence: >-
+    No Idempotency-Key parameter, header or request-body field appears anywhere
+    in the 12 published operations. The five POST operations
+    (config_create, matches_create, person_records_import_create,
+    person_records_export_create, users_create) offer no client-supplied
+    dedupe key, so a retried import or match creation is not safe by contract.
+  note: >-
+    No `Idempotency` pointer is emitted in apis.yml - the provider does not
+    ship an idempotency contract and asserting one would be false.
+pagination:
+  supported: false
+  evidence: >-
+    GET /api/v1/persons and GET /api/v1/potential-matches declare no query
+    parameters at all, and their responses (GetPersonsResponse,
+    GetPotentialMatchesResponse) are a single unbounded array property with no
+    cursor, next-link, offset or total field.
+  risk: >-
+    An unbounded person list in an EMPI is a real operational concern at
+    production record volumes; consumers should expect the full collection.
+filtering:
+  supported: false
+  evidence: no query parameters are declared on any operation.
+versioning:
+  scheme: uri-path
+  current: v1
+  evidence: every path is prefixed /api/v1/.
+  spec_version: 1.0.0
+  release_versioning: semver on the tuva_empi repository (see lifecycle/).
+media_types:
+  request: application/json
+  response: application/json
+error_envelope:
+  documented: false
+  evidence: >-
+    Every one of the 12 operations declares a single "200" response and nothing
+    else - no 4xx, no 5xx, no problem+json. The error shape is therefore whatever
+    Django REST Framework returns by default and is not part of the published
+    contract.
+  detail: errors/tuva-health-problem-types.yml
+request_tracing:
+  supported: false
+  evidence: no request-id / correlation-id header is documented or declared.
+rate_limiting:
+  documented: false
+  detail: rate-limits/tuva-health-rate-limits.yml
+bulk_and_async:
+  supported: true
+  pattern: s3-staged-batch
+  evidence: >-
+    POST /api/v1/person-records/import (person_records_import_create) and
+    POST /api/v1/person-records/export (person_records_export_create) both take
+    an s3_uri, so bulk record movement is staged through object storage rather
+    than through the request body. ImportPersonRecordsRequest requires
+    {config_id, s3_uri}; the response returns a job handle.
+  note: >-
+    Matching itself runs as a separate Kubernetes job (the matching-service
+    container), so import is asynchronous with respect to match results.
+health_check:
+  operation: health_check_retrieve
+  path: /api/v1/health-check
+  note: Returns an empty JSON object on 200; suitable as a liveness probe.
+cross_links:
+  authentication: authentication/tuva-health-authentication.yml
+  errors: errors/tuva-health-problem-types.yml
+  lifecycle: lifecycle/tuva-health-lifecycle.yml
+  rate_limits: rate-limits/tuva-health-rate-limits.yml
+  data_model: data-model/tuva-health-data-model.yml

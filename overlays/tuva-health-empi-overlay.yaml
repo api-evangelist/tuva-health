@@ -1,0 +1,70 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Tuva EMPI API
+  version: 1.0.0
+extends: openapi/tuva-health-empi-openapi.yml
+x-provenance:
+  generated: '2026-08-15'
+  method: generated
+  source: >-
+    openapi/tuva-health-empi-openapi.yml (harvested verbatim from
+    https://raw.githubusercontent.com/tuva-health/tuva_empi/main/docs/resources/tuva-empi-api-schema.yaml)
+    + https://tuva-health.github.io/tuva_empi/docs/configuration
+  note: >-
+    Non-destructive annotations only. Every value below is sourced from Tuva's own
+    documentation or from an artifact in this repo; nothing about the API's
+    behaviour is invented. The overlay deliberately does NOT add a securityScheme
+    to the contract - the provider's spec is silent on auth and it is their call to
+    declare it - it records the observed model as an x- extension and flags the gap.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: tuva-health
+      x-apievangelist-source: https://github.com/tuva-health/tuva_empi/blob/main/docs/resources/tuva-empi-api-schema.yaml
+      x-apievangelist-license: Apache-2.0
+      x-apievangelist-deployment: customer-hosted
+      x-apievangelist-rendered-reference: https://tuva-health.github.io/tuva_empi/api-docs/
+      description: >-
+        HTTP API of Tuva EMPI, Tuva Health's open-source enterprise master patient
+        index. Customer-deployed (OCI images on Kubernetes or Docker Compose);
+        Tuva operates no instance of this API, so there is no vendor base URL.
+  - target: $.info
+    update:
+      x-apievangelist-auth:
+        model: oidc-jwt-on-forwarded-header
+        header: X-Forwarded-Access-Token
+        header_configurable: true
+        identity_providers: [keycloak, aws-cognito]
+        docs: https://tuva-health.github.io/tuva_empi/docs/configuration
+        declared_in_spec: false
+        artifact: authentication/tuva-health-authentication.yml
+  - target: $.info
+    update:
+      x-apievangelist-gaps:
+        - no components.securitySchemes and no security requirement, though the API is authenticated in every documented deployment
+        - every operation declares only a 200 response - no 4xx/5xx anywhere in the contract
+        - no idempotency key on any of the five write operations
+        - no pagination or filtering parameters on the collection reads
+        - no servers[] block (consistent with customer-hosted deployment, but leaves clients with no example host)
+  - target: $.paths['/api/v1/health-check'].get
+    update:
+      x-apievangelist-usage: liveness-probe
+  - target: $.paths['/api/v1/person-records/import'].post
+    update:
+      x-apievangelist-pattern: s3-staged-batch
+      x-apievangelist-async: >-
+        Matching runs as a separate Kubernetes job (the matching-service
+        container), so results are not available on this response.
+  - target: $.paths['/api/v1/person-records/export'].post
+    update:
+      x-apievangelist-pattern: s3-staged-batch
+  - target: $.paths['/api/v1/matches'].post
+    update:
+      x-apievangelist-consequence: write
+      x-apievangelist-note: >-
+        Adjudicates identity resolution - merging or splitting a person's records.
+        Not retry-safe by contract; no idempotency key is defined.
+  - target: $.paths['/api/v1/users/{id}'].post
+    update:
+      x-apievangelist-consequence: write
+      x-apievangelist-note: Changes a user's role - an access-control mutation despite the resource path.

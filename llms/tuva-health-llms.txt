@@ -1,28 +1,51 @@
 # Tuva Health
 
-> Tuva Health, Inc. is a US healthcare data company behind The Tuva Project, an open-source, warehouse-native data-transformation platform that harmonizes, validates, normalizes, and enriches raw healthcare data (medical and pharmacy claims, EHR clinical data, ADT feeds, HL7 FHIR) into an analytics-ready Core Data Model and a library of Data Marts. It runs as a dbt package plus Python utilities inside the customer's own cloud data warehouse (Snowflake, Databricks, BigQuery, Redshift, Microsoft Fabric) — it is open-source software, not a hosted HTTP or FHIR API.
+> Tuva Health, Inc. is a US healthcare data company behind The Tuva Project, an open-source, warehouse-native data-transformation platform that harmonizes, validates, normalizes, and enriches raw healthcare data (medical and pharmacy claims, EHR clinical data, ADT feeds, HL7 FHIR) into an analytics-ready Core Data Model and a library of Data Marts. It runs as a dbt package plus Python utilities inside the customer's own cloud data warehouse (Snowflake, Databricks, BigQuery, Redshift, Microsoft Fabric). Tuva serves no FHIR API — FHIR R4 is an input format it flattens. Tuva does publish one HTTP API: Tuva EMPI, an open-source enterprise master patient index that customers deploy themselves.
 
 ## Products
 - [The Tuva Project (dbt package)](https://thetuvaproject.com/getting-started): Core open-source dbt package transforming Input Layer data into the Core Data Model and Data Marts.
+- [Tuva EMPI](https://tuva-health.github.io/tuva_empi/): Apache-2.0 enterprise master patient index — Splink probabilistic matching, a review UI, and a 12-operation HTTP API. Customer-deployed via OCI images; Tuva hosts no instance.
 - [FHIR Inferno](https://github.com/tuva-health/FHIR_inferno): Python CLI that flattens nested HL7 FHIR JSON into flat CSV files for the Input Layer.
-- [Tuva Connectors](https://thetuvaproject.com/connectors/overview): dbt connector projects (Medicare CCLF, BCDA, CMS synthetic, Aetna, Epic, eClinicalWorks, and a template) that map raw source formats into the Input Layer.
+- [Tuva Connectors](https://thetuvaproject.com/connectors/overview): dbt connector projects (Medicare CCLF, LDS, BCDA, CMS synthetic, Aetna, Epic, Cerner, Canvas, eClinicalWorks, Zus, and a template) that map raw source formats into the Input Layer.
+
+## API
+- [Tuva EMPI OpenAPI 3.0.3](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/openapi/tuva-health-empi-openapi.yml) — 12 operations, 31 schemas. Upstream: https://github.com/tuva-health/tuva_empi/blob/main/docs/resources/tuva-empi-api-schema.yaml
+- [Rendered API reference](https://tuva-health.github.io/tuva_empi/api-docs/)
+- Base URL: customer-hosted — `https://{your-empi-host}/api/v1`. There is no Tuva-operated API host.
+- Auth: OIDC JWT forwarded on `X-Forwarded-Access-Token` by an OAuth2 proxy; IdP is the customer's Keycloak or AWS Cognito. Not declared in the spec.
+- Caveats an agent should know: no idempotency keys, no pagination, and every operation declares only a `200` — there are no documented error responses.
 
 ## Docs
-- [Getting Started](https://thetuvaproject.com/getting-started)
+- [Getting Started (Tuva Project)](https://thetuvaproject.com/getting-started)
 - [Core Data Model](https://thetuvaproject.com/core-data-model)
 - [Connectors Overview](https://thetuvaproject.com/connectors/overview)
 - [FHIR mapping guide](https://thetuvaproject.com/guides/mapping/fhir)
+- [Tuva EMPI getting started](https://tuva-health.github.io/tuva_empi/docs/getting-started)
+- [Tuva EMPI configuration](https://tuva-health.github.io/tuva_empi/docs/configuration)
 
 ## Distribution
-- [dbt Hub — the_tuva_project 0.18.0](https://hub.getdbt.com/tuva-health/the_tuva_project/latest/)
+- [dbt Hub — the_tuva_project 0.18.0 (2026-05-07)](https://hub.getdbt.com/tuva-health/the_tuva_project/latest/)
+- [ghcr.io/tuva-health/tuva-empi-backend](https://github.com/tuva-health/tuva_empi/pkgs/container/tuva-empi-backend)
 - [GitHub organization](https://github.com/tuva-health)
 - [Releases / changelog](https://github.com/tuva-health/tuva-core/releases)
 
+## Try it
+- [Tuva EMPI local demo (Docker Compose, localhost:9000)](https://tuva-health.github.io/tuva_empi/docs/getting-started/local-demo-environment)
+- [Tuva Project demo — 1,000-patient synthetic claims dataset](https://github.com/tuva-health/demo)
+
 ## Repo artifacts
+- [OpenAPI (Tuva EMPI)](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/openapi/tuva-health-empi-openapi.yml)
+- [Authentication](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/authentication/tuva-health-authentication.yml)
+- [Conventions](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/conventions/tuva-health-conventions.yml)
+- [Lifecycle](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/lifecycle/tuva-health-lifecycle.yml)
+- [Agent Skills](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/skills/_index.yml)
+- [Sandbox / demo environments](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/sandbox/tuva-health-sandbox.yml)
 - [Packages](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/packages/tuva-health-packages.yml)
+- [CLI surfaces](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/cli/tuva-health-cli.yml)
 - [Data model / ERD](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/data-model/tuva-health-data-model.yml)
 - [Conformance](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/conformance/tuva-health-conformance.yml)
 - [Changelog](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/changelog/tuva-health-changelog.yml)
+- [Plans / pricing (none published)](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/plans/tuva-health-plans-pricing.yml)
 - [Domain security](https://raw.githubusercontent.com/api-evangelist/tuva-health/refs/heads/main/security/tuva-health-domain-security.yml)
 
 ## Community

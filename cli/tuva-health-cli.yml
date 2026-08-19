@@ -1,0 +1,55 @@
+generated: '2026-08-15'
+method: searched
+source: >-
+  https://github.com/tuva-health/FHIR_inferno#usage +
+  https://tuva-health.github.io/tuva_empi/docs/getting-started/production-environment +
+  https://github.com/tuva-health/tuva-core/blob/main/AGENTS.md
+note: >-
+  Tuva ships no installable, versioned CLI binary and no package-manager-installed
+  command (nothing on PyPI, npm, Homebrew or crates.io). What it does publish are
+  three documented command surfaces, recorded here honestly for what they are:
+  a Python utility script in the FHIR Inferno repo, container entrypoint commands
+  for the Tuva EMPI backend image, and a repo-local dbt wrapper script. Users
+  otherwise drive Tuva through dbt's own CLI, which is not Tuva's software.
+surfaces:
+  - id: fhir-inferno
+    kind: python-utility-script
+    repo: https://github.com/tuva-health/FHIR_inferno
+    install: git clone https://github.com/tuva-health/FHIR_inferno
+    published_to_registry: false
+    commands:
+      - command: python utils/run_parser.py --config <config.ini> --input <input.json> --output <output.csv>
+        description: Parse a FHIR JSON/NDJSON file (or a directory of them) into CSV via a mapping config.
+        flags:
+          - flag: --config
+            description: 'Path to the .ini mapping config (requires [GenConfig] and [Struct] sections).'
+          - flag: --input
+            description: Input FHIR .json or .ndjson file, or a directory of them.
+          - flag: --output
+            description: Output CSV path.
+    library_equivalent: parseFhir.parse(configPath=..., inputPath=..., outputPath=...)
+    helper_scripts: https://github.com/tuva-health/FHIR_inferno/tree/main/helper_scripts
+  - id: tuva-empi-backend
+    kind: container-entrypoint-commands
+    image: ghcr.io/tuva-health/tuva-empi-backend
+    docs: https://tuva-health.github.io/tuva_empi/docs/getting-started/production-environment
+    commands:
+      - {command: '(none)', description: Runs the Tuva EMPI API on port 8000.}
+      - {command: migrate, description: Run database migrations; must be run once per new version before deploying containers. Only one instance at a time.}
+      - {command: bootstrap, description: Register the initial admin user from initial_setup.admin_email. Run once on first launch.}
+      - {command: matching-service, description: Run the matching service that dispatches Splink matching jobs.}
+    env:
+      - {name: TUVA_EMPI_CONFIG_FILE, description: Path to the backend JSON config file (takes priority).}
+      - {name: TUVA_EMPI_CONFIG_AWS_SECRET_ARN, description: ARN of an AWS Secrets Manager secret holding the config file.}
+      - {name: TUVA_EMPI_MATCHING_SERVICE__K8S_JOB_RUNNER__JOB_IMAGE, description: Image used for the matching job under the K8s job runner.}
+  - id: dbt-local
+    kind: repo-local-wrapper-script
+    repo: https://github.com/tuva-health/tuva-core
+    commands:
+      - {command: scripts/dbt-local deps, description: Install package dependencies locally.}
+      - {command: scripts/dbt-local debug, description: Validate the local warehouse connection.}
+      - {command: 'scripts/dbt-local build --select <selector>', description: Build a narrow slice of the Tuva models.}
+      - {command: scripts/dbt-local build --full-refresh, description: Full-refresh build, expected before opening a PR.}
+    note: >-
+      Contributor tooling described in the repository's AGENTS.md, not an end-user
+      product CLI.

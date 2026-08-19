@@ -1,0 +1,39 @@
+generated: '2026-08-15'
+method: searched
+source: https://www.tuvahealth.com/sitemap.xml
+plan_count: 0
+model: open-source-core-plus-contact-sales
+note: >-
+  Tuva Health publishes NO pricing page and NO plan tiers. The site's own
+  sitemap.xml (34 URLs, fetched 2026-08-15) contains no /pricing entry, and
+  https://www.tuvahealth.com/pricing returns 404 - a pointer to that URL was
+  carried in apis.yml from an earlier round and has been removed as broken.
+  Every commercial call-to-action on the site is "Book a Demo". The core
+  platform, connectors, data marts, FHIR Inferno and Tuva EMPI are all
+  Apache-2.0 open source and free to run in the customer's own warehouse; the
+  revenue surface is the commercial Core Platform plus three named services and
+  a partner marketplace, all quoted through sales.
+evidence:
+  - {url: 'https://www.tuvahealth.com/pricing', status: 404}
+  - {url: 'https://www.tuvahealth.com/sitemap.xml', status: 200, note: no pricing URL present}
+  - {url: 'https://www.tuvahealth.com/platform', status: 200, note: 'CTA is "Book a Demo" / "Explore the Docs"'}
+plans: []
+commercial_surface:
+  - {name: Core Platform, url: 'https://www.tuvahealth.com/products/core-platform', pricing: contact-sales}
+  - {name: Data Quality Intelligence, url: 'https://www.tuvahealth.com/products/data-quality-intelligence', pricing: contact-sales}
+  - {name: EMPI, url: 'https://www.tuvahealth.com/products/empi', pricing: contact-sales}
+  - {name: Medical Economics, url: 'https://www.tuvahealth.com/products/medical-economics', pricing: contact-sales}
+  - {name: HEDIS & Stars, url: 'https://www.tuvahealth.com/products/hedis-stars', pricing: contact-sales}
+  - {name: Medicare CQMs, url: 'https://www.tuvahealth.com/products/mcqms', pricing: contact-sales}
+  - {name: Risk Adjustment, url: 'https://www.tuvahealth.com/products/risk-adjustment', pricing: contact-sales}
+  - {name: 'Services: Forward Deployed Engineering', url: 'https://www.tuvahealth.com/services/forward-deployed-engineering', pricing: contact-sales}
+  - {name: 'Services: Production Assurance', url: 'https://www.tuvahealth.com/services/production-assurance', pricing: contact-sales}
+  - {name: 'Services: Starter Pack', url: 'https://www.tuvahealth.com/services/starter-pack', pricing: contact-sales}
+  - {name: Marketplace, url: 'https://www.tuvahealth.com/marketplace', pricing: contact-sales, note: third-party data/model listings}
+free_tier:
+  available: true
+  form: open-source
+  detail: >-
+    The Tuva Project dbt package, all connectors, the data marts and Tuva EMPI
+    are Apache-2.0 and installable at no cost; the only spend is the customer's
+    own warehouse compute.

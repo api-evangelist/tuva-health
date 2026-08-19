@@ -1,0 +1,56 @@
+generated: '2026-08-15'
+method: searched
+source: openapi/tuva-health-empi-openapi.yml
+docs: https://tuva-health.github.io/tuva_empi/docs/configuration
+note: >-
+  Derived mechanically first (0-working/derive-authentication.py returned zero
+  profiles: the published Tuva EMPI OpenAPI declares NO components.securitySchemes
+  and no top-level security requirement, so the spec is silent on auth). Upgraded
+  to `searched` from the provider's own configuration documentation, which does
+  document the real model: Tuva EMPI is deployed behind an OAuth2/OIDC reverse
+  proxy (oauth2-proxy in the reference Docker Compose stack) and the Django
+  backend validates a JWT presented on a configurable header. Because Tuva EMPI
+  is customer-deployed software, the identity provider, issuer, JWKS URL, client
+  ID and audience are all CUSTOMER-supplied configuration - Tuva operates no
+  authorization server of its own.
+summary:
+  types: [openIdConnect]
+  api_key_in: []
+  oauth2_flows: []
+  token_transport: http-header
+  spec_declares_security: false
+schemes:
+  - name: oidc-jwt-forwarded-header
+    type: openIdConnect
+    documented_in: docs
+    sources: [https://tuva-health.github.io/tuva_empi/docs/configuration]
+    header: X-Forwarded-Access-Token
+    header_configurable: true
+    description: >-
+      A JWT issued by the customer's identity provider, forwarded to the API by
+      the authenticating proxy on the header named by idp.<backend>.jwt_header
+      (default X-Forwarded-Access-Token). The backend verifies the token against
+      the configured JWKS URL, client ID and audience claim.
+    identity_providers:
+      - id: keycloak
+        config_key: idp.keycloak
+        settings: [server_url, realm, jwt_header, jwt_aud, jwks_url, client_id, client_secret]
+      - id: aws-cognito
+        config_key: idp.aws_cognito
+        settings: [cognito_user_pool_id, jwt_header, jwks_url, client_id]
+authorization:
+  model: role-based
+  note: >-
+    Roles are held in Tuva EMPI itself (components.schemas.RoleEnum in the
+    OpenAPI) and updated through POST /api/v1/users/{id}
+    (operationId users_create). The first admin is granted at bootstrap time
+    from initial_setup.admin_email, which must already exist in the external
+    identity provider.
+  roles_source: openapi/tuva-health-empi-openapi.yml#/components/schemas/RoleEnum
+scopes: []
+gaps:
+  - >-
+    The published OpenAPI declares no securitySchemes and applies no security to
+    any of its 12 operations, so a generated client or agent reading the contract
+    alone would believe the API is unauthenticated. Declaring an
+    openIdConnect / http-bearer scheme in the spec would close this.

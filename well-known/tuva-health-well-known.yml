@@ -1,0 +1,50 @@
+generated: '2026-08-15'
+method: probed
+source: live HTTP probes of every host in apis.yml + the EMPI docs host
+note: >-
+  Every /.well-known/ path returned 404 on every Tuva host. No WellKnown or
+  SecurityTxt pointer is emitted in apis.yml, because this file records an
+  ABSENCE, not a served discovery surface. Tuva EMPI is customer-deployed
+  software, so any OIDC discovery document belongs to the customer's own
+  identity provider (Keycloak or AWS Cognito), not to a Tuva-operated host -
+  which is why /.well-known/openid-configuration is correctly absent here.
+hosts:
+  - host: https://www.tuvahealth.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://thetuvaproject.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://tuva-health.github.io
+    note: EMPI documentation + rendered API reference host (GitHub Pages).
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+unresolved_hosts:
+  - host: docs.tuvahealth.com
+    note: >-
+      CNAME resolves to hosting.gitbook.io but every HTTPS request fails at the
+      TLS layer (curl exit / status 000) - the GitBook custom domain is not
+      provisioned. Published docs live at thetuvaproject.com instead.
+  - host: api.tuvahealth.com
+    note: NXDOMAIN - no Tuva-operated API host exists.
+  - host: app.tuvahealth.com
+    note: NXDOMAIN.
+files: []

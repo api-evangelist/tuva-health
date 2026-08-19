@@ -1,0 +1,72 @@
+generated: '2026-08-15'
+method: searched
+source: >-
+  https://tuva-health.github.io/tuva_empi/docs/releases +
+  https://github.com/tuva-health/tuva_empi/blob/main/RELEASE.md +
+  https://github.com/tuva-health/tuva-core/releases
+note: >-
+  Tuva ships two independently versioned lines: the_tuva_project dbt package
+  (cut from the tuva-core repo, published to dbt Hub) and Tuva EMPI (OCI images
+  + the HTTP API in openapi/). Both are semver, both are pre-1.0, and neither is
+  a Tuva-operated service - customers run them - so there is no uptime SLA and
+  no status page to point at.
+lines:
+  - id: the-tuva-project
+    artifact: dbt package
+    scheme: semver
+    current: 0.18.0
+    released: '2026-05-07'
+    releases_url: https://github.com/tuva-health/tuva-core/releases
+    distribution: https://hub.getdbt.com/tuva-health/the_tuva_project/latest/
+    prerelease_convention: '-rc tags precede each minor/patch release'
+    changelog: changelog/tuva-health-changelog.yml
+  - id: tuva-empi
+    artifact: OCI images + HTTP API
+    scheme: semver
+    current: 0.1.0
+    released: '2025-04-24'
+    in_development: 0.2.0-dev
+    in_development_source: https://github.com/tuva-health/tuva_empi/blob/main/VERSION
+    releases_url: https://github.com/tuva-health/tuva_empi/releases
+    api_version: v1 (uri-path); OpenAPI info.version 1.0.0
+versioning:
+  scheme: semver
+  api_scheme: uri-path
+  docs: https://tuva-health.github.io/tuva_empi/docs/releases
+  release_notes_generation: >-
+    Auto-generated from conventional-commit-style PR titles (feat/fix/docs/chore);
+    maintainers curate notes, breaking changes and upgrade guides for major releases.
+  release_process_docs: https://github.com/tuva-health/tuva_empi/blob/main/RELEASE.md
+deprecation:
+  policy_url: https://tuva-health.github.io/tuva_empi/docs/releases
+  policy_published: true
+  sunset_header: false
+  stability: pre-1.0
+  statement: >-
+    Published verbatim posture: "Tuva EMPI is in very early stages of development
+    and is changing rapidly. We are not yet at 1.0.0 and so breaking changes can
+    occur in any release. In general, when upgrading, you should not skip versions
+    as deprecated functionality may be removed soon after it's deprecated."
+  note: >-
+    This is a real, provider-published deprecation posture, but it is a permissive
+    one - it warns that deprecated functionality is removed quickly and gives no
+    minimum notice window. There is no RFC 8594 Sunset/Deprecation header support;
+    the API declares no response headers at all.
+sla:
+  published: false
+  note: >-
+    Both products are customer-deployed, so availability is the customer's.
+    Tuva sells a "Production Assurance" service described as contract-backed
+    support for teams running Tuva in production
+    (https://www.tuvahealth.com/services/production-assurance); its terms are
+    not published.
+status_page:
+  published: false
+  evidence:
+    - {url: 'https://status.tuvahealth.com', status: 000, note: DNS/TLS does not resolve}
+    - {url: 'https://www.tuvahealth.com/status', status: 404}
+  note: >-
+    No StatusPage pointer is emitted in apis.yml - there is nothing to point at,
+    and for warehouse-native + self-hosted software there is nothing for Tuva to
+    report uptime on.
+deprecated_operations: []

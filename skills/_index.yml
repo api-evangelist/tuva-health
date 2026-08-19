@@ -1,0 +1,38 @@
+generated: '2026-08-15'
+method: generated
+note: >-
+  Three generated Agent Skills grounded in the 12 real operationIds of the
+  published Tuva EMPI OpenAPI (every operationId below was read out of
+  openapi/tuva-health-empi-openapi.yml - none invented), plus one skill SEARCHED
+  and saved verbatim: Tuva's own AGENTS.md from the tuva-core repository.
+skills:
+  - file: tuva-health-empi-configure-and-import.md
+    name: Configure Tuva EMPI matching and import person records
+    api: openapi/tuva-health-empi-openapi.yml
+    operations: [health_check_retrieve, data_sources_retrieve, config_create, person_records_import_create]
+    method: generated
+  - file: tuva-health-empi-review-potential-matches.md
+    name: Review and adjudicate Tuva EMPI potential matches
+    api: openapi/tuva-health-empi-openapi.yml
+    operations: [potential_matches_retrieve, potential_matches_retrieve_2, persons_retrieve_2, matches_create]
+    method: generated
+  - file: tuva-health-empi-export-and-administer.md
+    name: Export Tuva EMPI persons and administer users
+    api: openapi/tuva-health-empi-openapi.yml
+    operations: [persons_retrieve, persons_retrieve_2, person_records_export_create, users_retrieve, users_create]
+    method: generated
+  - file: tuva-health-tuva-agents.md
+    name: Tuva Agent Operating Manual (provider-published)
+    api: null
+    operations: []
+    method: searched
+    source: https://github.com/tuva-health/tuva-core/blob/main/AGENTS.md
+    note: >-
+      Saved VERBATIM. This is Tuva's own agent context file for contributing to
+      the Tuva dbt package - issue-first worktree workflow, release labels,
+      cross-warehouse SQL portability rules, CI slash-commands, and the
+      `tuva-dev/` invocation shortcut. It governs agents WORKING ON Tuva, not
+      agents CALLING an API; it is included because the provider published it.
+coverage:
+  openapi_operations_total: 12
+  openapi_operations_covered: 12

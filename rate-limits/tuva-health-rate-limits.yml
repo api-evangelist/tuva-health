@@ -1,0 +1,27 @@
+generated: '2026-08-15'
+method: searched
+source: >-
+  https://tuva-health.github.io/tuva_empi/ (getting-started, configuration,
+  architecture, production-environment) + openapi/tuva-health-empi-openapi.yml
+limit_count: 0
+note: >-
+  HONEST ZERO. No rate limits are published, and none would be meaningful in the
+  usual sense: Tuva EMPI is customer-deployed software - the customer runs the
+  API container in their own cluster - so throughput is bounded by the deployment
+  the customer chooses, not by a Tuva-operated quota. The published OpenAPI
+  declares no 429 response and no response headers at all, so there is no runtime
+  rate-limit signal for an agent to read. No RateLimits pointer is emitted in
+  apis.yml, because a pointer would assert a rate-limit contract that does not
+  exist.
+evidence:
+  - {url: 'https://tuva-health.github.io/tuva_empi/docs/configuration', status: 200, note: no rate-limit settings}
+  - {url: 'https://tuva-health.github.io/tuva_empi/docs/getting-started/production-environment', status: 200, note: 'deployment guidance only (Kubernetes, OCI images, ports)'}
+  - {source: openapi/tuva-health-empi-openapi.yml, note: 'no 429 response, no RateLimit-* / X-RateLimit-* / Retry-After headers declared'}
+limits: []
+response_headers: []
+exhaustion_status: null
+scaling_note: >-
+  The nearest published capacity control is deployment shape, not rate limiting:
+  the backend API listens on port 8000 and matching runs as a separate Kubernetes
+  job (matching_service.k8s_job_runner.job_namespace), so concurrency is scaled by
+  replicas and job configuration.

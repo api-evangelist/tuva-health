@@ -1,0 +1,69 @@
+generated: '2026-08-15'
+method: derived
+status: candidate
+source: openapi/tuva-health-empi-openapi.yml
+note: >-
+  Tuva Health ships NO MCP server. Searched the tuva-health GitHub org (62 public
+  repos, none MCP-related), thetuvaproject.com, the Tuva EMPI documentation, and
+  the public web - nothing. The tools below are a CANDIDATE set DERIVED one-to-one
+  from the 12 operations in the published Tuva EMPI OpenAPI; they describe what an
+  MCP server over this API could expose, not anything Tuva operates. No MCPServer
+  pointer is emitted in apis.yml, because emitting one would credit Tuva with an
+  agent surface it does not ship.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+server:
+  name: tuva-empi
+  transport: null
+  url: null
+searched:
+  - {source: 'https://github.com/tuva-health', result: no MCP repository among 62 public repos}
+  - {source: 'https://tuva-health.github.io/tuva_empi/', result: no MCP documentation}
+  - {source: 'https://thetuvaproject.com/', result: no MCP documentation}
+tools:
+  - name: get_health_check
+    description: Check the health of the Tuva EMPI API.
+    source_operation: openapi/tuva-health-empi-openapi.yml#health_check_retrieve
+  - name: create_config
+    description: Create a matching configuration (blocking rules, comparisons, Splink settings).
+    source_operation: openapi/tuva-health-empi-openapi.yml#config_create
+  - name: list_data_sources
+    description: List the data sources present in the EMPI.
+    source_operation: openapi/tuva-health-empi-openapi.yml#data_sources_retrieve
+  - name: import_person_records
+    description: Import person records from an S3 URI under a given matching config.
+    source_operation: openapi/tuva-health-empi-openapi.yml#person_records_import_create
+  - name: export_person_records
+    description: Export person records to an S3 URI.
+    source_operation: openapi/tuva-health-empi-openapi.yml#person_records_export_create
+  - name: list_persons
+    description: List unified persons.
+    source_operation: openapi/tuva-health-empi-openapi.yml#persons_retrieve
+  - name: get_person
+    description: Retrieve one unified person and its constituent person records.
+    source_operation: openapi/tuva-health-empi-openapi.yml#persons_retrieve_2
+  - name: list_potential_matches
+    description: List potential matches awaiting review.
+    source_operation: openapi/tuva-health-empi-openapi.yml#potential_matches_retrieve
+  - name: get_potential_match
+    description: Retrieve one potential match with its pairwise prediction results.
+    source_operation: openapi/tuva-health-empi-openapi.yml#potential_matches_retrieve_2
+  - name: create_match
+    description: Adjudicate a potential match into a person-record match.
+    source_operation: openapi/tuva-health-empi-openapi.yml#matches_create
+  - name: list_users
+    description: List Tuva EMPI users and their roles.
+    source_operation: openapi/tuva-health-empi-openapi.yml#users_retrieve
+  - name: update_user_role
+    description: Update a user's role.
+    source_operation: openapi/tuva-health-empi-openapi.yml#users_create
+agent_safety_note: >-
+  create_match and update_user_role are write operations against identity
+  resolution and access control in a HIPAA-relevant system; the API declares no
+  idempotency key (see conventions/) and no error responses (see errors/), so an
+  agent cannot safely retry either one from the contract alone.
