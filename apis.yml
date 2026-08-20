@@ -28,6 +28,19 @@ tags:
 - Data Analytics
 - Data Transformation
 - Claims
+- Open-Source
+- dbt
+- EMPI
+- Patient Matching
+tags_raw:
+- Healthcare
+- United States
+- Health Data
+- FHIR
+- Interoperability
+- Data Analytics
+- Data Transformation
+- Claims
 - Open Source
 - dbt
 - EMPI
@@ -106,6 +119,11 @@ apis:
   humanURL: https://tuva-health.github.io/tuva_empi/
   baseURL: https://{tuva-empi-host}/api/v1
   tags:
+  - EMPI
+  - Patient Matching
+  - Healthcare
+  - Open-Source
+  tags_raw:
   - EMPI
   - Patient Matching
   - Healthcare
