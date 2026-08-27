@@ -52,11 +52,10 @@ apis:
 - aid: tuva-health:the-tuva-project
   name: The Tuva Project (dbt package)
   description: >-
-    The core open-source Tuva dbt package that transforms healthcare data from the Tuva Input
-    Layer into the Tuva Core Data Model and Data Marts, including data-quality tests,
-    normalization, claims preprocessing, and bundled terminology sets. Distributed as a dbt
-    package (dbt Hub / GitHub) that runs inside the customer's cloud data warehouse - it is
-    open-source software, not a hosted HTTP or FHIR API.
+    The core open-source Tuva dbt package that transforms healthcare data from the Tuva Input Layer into
+    the Tuva Core Data Model and Data Marts, including data-quality tests, normalization, claims preprocessing,
+    and bundled terminology sets. Distributed as a dbt package (dbt Hub / GitHub) that runs inside the
+    customer's cloud data warehouse - it is open-source software, not a hosted HTTP or FHIR API.
   humanURL: https://thetuvaproject.com/getting-started
   tags:
   - Data Transformation
@@ -74,10 +73,9 @@ apis:
 - aid: tuva-health:fhir-inferno
   name: FHIR Inferno
   description: >-
-    An open-source Python utility that flattens nested HL7 FHIR JSON (bundles / resources) into
-    tabular CSV files so FHIR-sourced data can be loaded and mapped into the Tuva Input Layer.
-    A command-line data-preprocessing tool, not a FHIR server or HTTP API - it consumes FHIR
-    rather than serving it.
+    An open-source Python utility that flattens nested HL7 FHIR JSON (bundles / resources) into tabular
+    CSV files so FHIR-sourced data can be loaded and mapped into the Tuva Input Layer. A command-line
+    data-preprocessing tool, not a FHIR server or HTTP API - it consumes FHIR rather than serving it.
   humanURL: https://github.com/tuva-health/fhir_inferno
   tags:
   - FHIR
@@ -91,10 +89,10 @@ apis:
 - aid: tuva-health:tuva-connectors
   name: Tuva Connectors
   description: >-
-    A family of open-source dbt connector projects (Medicare CCLF, BCDA, CMS synthetic, Aetna,
-    BCBS, and a connector template, plus a FHIR preprocessing connector) that map raw
-    claims, EHR, ADT, and FHIR source formats into the standardized Tuva Input Layer. These
-    are warehouse-native dbt projects, not HTTP API endpoints.
+    A family of open-source dbt connector projects (Medicare CCLF, BCDA, CMS synthetic, Aetna, BCBS, and
+    a connector template, plus a FHIR preprocessing connector) that map raw claims, EHR, ADT, and FHIR
+    source formats into the standardized Tuva Input Layer. These are warehouse-native dbt projects, not
+    HTTP API endpoints.
   humanURL: https://thetuvaproject.com/connectors/overview
   tags:
   - Connectors
@@ -105,32 +103,16 @@ apis:
     url: https://thetuvaproject.com/connectors/overview
   - type: SourceCode
     url: https://github.com/tuva-health/connector_template
-- aid: tuva-health:tuva-empi
-  name: Tuva EMPI API
-  description: >-
-    The HTTP API of Tuva EMPI, Tuva Health's open-source (Apache-2.0) enterprise master
-    patient index. A containerized Django backend that ingests person records, runs
-    Splink-based probabilistic matching, and lets reviewers adjudicate potential matches
-    into unified person IDs. Twelve JSON operations under /api/v1 cover configuration,
-    data sources, person-record import/export, persons, potential matches, match creation,
-    users and a health check. Tuva EMPI is customer-deployed - the OCI images run in the
-    customer's own Kubernetes cluster or via Docker Compose - so there is no Tuva-operated
-    base URL; the host is whatever the customer deploys it to.
-  humanURL: https://tuva-health.github.io/tuva_empi/
+- aid: tuva-health:tuva-health-config-api
+  name: Tuva Health Config API
+  description: The config API from Tuva Health — 1 operation(s) for config.
+  humanURL: https://thetuvaproject.com/getting-started
   baseURL: https://{tuva-empi-host}/api/v1
   tags:
-  - EMPI
-  - Patient Matching
-  - Healthcare
-  - Open-Source
-  tags_raw:
-  - EMPI
-  - Patient Matching
-  - Healthcare
-  - Open Source
+  - config
   properties:
   - type: OpenAPI
-    url: openapi/tuva-health-empi-openapi.yml
+    url: openapi/tuva-health-config-api-openapi.yml
   - type: Documentation
     url: https://tuva-health.github.io/tuva_empi/docs/getting-started
   - type: APIReference
@@ -141,8 +123,146 @@ apis:
     url: https://github.com/tuva-health/tuva_empi
   - type: Authentication
     url: authentication/tuva-health-authentication.yml
-  - type: Overlay
-    url: overlays/tuva-health-empi-overlay.yaml
+- aid: tuva-health:tuva-health-data-sources-api
+  name: Tuva Health Data Sources API
+  description: The data-sources API from Tuva Health — 1 operation(s) for data-sources.
+  humanURL: https://thetuvaproject.com/getting-started
+  baseURL: https://{tuva-empi-host}/api/v1
+  tags:
+  - data-sources
+  properties:
+  - type: OpenAPI
+    url: openapi/tuva-health-data-sources-api-openapi.yml
+  - type: Documentation
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started
+  - type: APIReference
+    url: https://tuva-health.github.io/tuva_empi/api-docs/
+  - type: GettingStarted
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started/local-demo-environment
+  - type: SourceCode
+    url: https://github.com/tuva-health/tuva_empi
+  - type: Authentication
+    url: authentication/tuva-health-authentication.yml
+- aid: tuva-health:tuva-health-health-check-api
+  name: Tuva Health Health Check API
+  description: The health-check API from Tuva Health — 1 operation(s) for health-check.
+  humanURL: https://thetuvaproject.com/getting-started
+  baseURL: https://{tuva-empi-host}/api/v1
+  tags:
+  - health-check
+  properties:
+  - type: OpenAPI
+    url: openapi/tuva-health-health-check-api-openapi.yml
+  - type: Documentation
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started
+  - type: APIReference
+    url: https://tuva-health.github.io/tuva_empi/api-docs/
+  - type: GettingStarted
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started/local-demo-environment
+  - type: SourceCode
+    url: https://github.com/tuva-health/tuva_empi
+  - type: Authentication
+    url: authentication/tuva-health-authentication.yml
+- aid: tuva-health:tuva-health-matches-api
+  name: Tuva Health Matches API
+  description: The matches API from Tuva Health — 1 operation(s) for matches.
+  humanURL: https://thetuvaproject.com/getting-started
+  baseURL: https://{tuva-empi-host}/api/v1
+  tags:
+  - matches
+  properties:
+  - type: OpenAPI
+    url: openapi/tuva-health-matches-api-openapi.yml
+  - type: Documentation
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started
+  - type: APIReference
+    url: https://tuva-health.github.io/tuva_empi/api-docs/
+  - type: GettingStarted
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started/local-demo-environment
+  - type: SourceCode
+    url: https://github.com/tuva-health/tuva_empi
+  - type: Authentication
+    url: authentication/tuva-health-authentication.yml
+- aid: tuva-health:tuva-health-person-records-api
+  name: Tuva Health Person Records API
+  description: The person-records API from Tuva Health — 2 operation(s) for person-records.
+  humanURL: https://thetuvaproject.com/getting-started
+  baseURL: https://{tuva-empi-host}/api/v1
+  tags:
+  - person-records
+  properties:
+  - type: OpenAPI
+    url: openapi/tuva-health-person-records-api-openapi.yml
+  - type: Documentation
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started
+  - type: APIReference
+    url: https://tuva-health.github.io/tuva_empi/api-docs/
+  - type: GettingStarted
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started/local-demo-environment
+  - type: SourceCode
+    url: https://github.com/tuva-health/tuva_empi
+  - type: Authentication
+    url: authentication/tuva-health-authentication.yml
+- aid: tuva-health:tuva-health-persons-api
+  name: Tuva Health Persons API
+  description: The persons API from Tuva Health — 2 operation(s) for persons.
+  humanURL: https://thetuvaproject.com/getting-started
+  baseURL: https://{tuva-empi-host}/api/v1
+  tags:
+  - persons
+  properties:
+  - type: OpenAPI
+    url: openapi/tuva-health-persons-api-openapi.yml
+  - type: Documentation
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started
+  - type: APIReference
+    url: https://tuva-health.github.io/tuva_empi/api-docs/
+  - type: GettingStarted
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started/local-demo-environment
+  - type: SourceCode
+    url: https://github.com/tuva-health/tuva_empi
+  - type: Authentication
+    url: authentication/tuva-health-authentication.yml
+- aid: tuva-health:tuva-health-potential-matches-api
+  name: Tuva Health Potential Matches API
+  description: The potential-matches API from Tuva Health — 2 operation(s) for potential-matches.
+  humanURL: https://thetuvaproject.com/getting-started
+  baseURL: https://{tuva-empi-host}/api/v1
+  tags:
+  - potential-matches
+  properties:
+  - type: OpenAPI
+    url: openapi/tuva-health-potential-matches-api-openapi.yml
+  - type: Documentation
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started
+  - type: APIReference
+    url: https://tuva-health.github.io/tuva_empi/api-docs/
+  - type: GettingStarted
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started/local-demo-environment
+  - type: SourceCode
+    url: https://github.com/tuva-health/tuva_empi
+  - type: Authentication
+    url: authentication/tuva-health-authentication.yml
+- aid: tuva-health:tuva-health-users-api
+  name: Tuva Health Users API
+  description: The users API from Tuva Health — 2 operation(s) for users.
+  humanURL: https://thetuvaproject.com/getting-started
+  baseURL: https://{tuva-empi-host}/api/v1
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/tuva-health-users-api-openapi.yml
+  - type: Documentation
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started
+  - type: APIReference
+    url: https://tuva-health.github.io/tuva_empi/api-docs/
+  - type: GettingStarted
+    url: https://tuva-health.github.io/tuva_empi/docs/getting-started/local-demo-environment
+  - type: SourceCode
+    url: https://github.com/tuva-health/tuva_empi
+  - type: Authentication
+    url: authentication/tuva-health-authentication.yml
 common:
 - type: DomainSecurity
   url: security/tuva-health-domain-security.yml
