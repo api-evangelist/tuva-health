@@ -13,33 +13,34 @@ capability_model:
   notice: NOTICE
 edge_count: 4
 edges:
-- tag: potential-matches
-  spec_file: tuva-health-potential-matches-api-openapi.yml
-  capability_id: BC-2900.10
-  capability_id_l1: BC-2900
-  capability_name: Master Patient Index Management
-  confidence: 0.9
-  evidence: GET /api/v1/potential-matches  Retrieve potential matches; schemas PotentialMatchDetail, PredictionResult
-  reason: Surfacing candidate duplicate person records with linkage prediction results for human adjudication
-    is the core of master patient index duplicate/overlay resolution.
 - tag: matches
   spec_file: tuva-health-matches-api-openapi.yml
   capability_id: BC-2900.10
   capability_id_l1: BC-2900
   capability_name: Master Patient Index Management
   confidence: 0.85
-  evidence: POST /api/v1/matches  Create match; schemas CreateMatchRequest, PersonUpdate, PersonRecordComment
-  reason: Tuva EMPI is an enterprise master patient index; creating a match links/merges person records
-    under a single identity, which is exactly master patient index stewardship and duplicate resolution.
+  evidence: POST /api/v1/matches  matches_create  Create match; schemas CreateMatchRequest, PersonUpdate,
+    PersonRecordComment
+  reason: 'Tuva EMPI (enterprise master patient index): creating a match links person records into a single
+    person identity — this is master patient index stewardship / duplicate resolution.'
+- tag: potential-matches
+  spec_file: tuva-health-potential-matches-api-openapi.yml
+  capability_id: BC-2900.10
+  capability_id_l1: BC-2900
+  capability_name: Master Patient Index Management
+  confidence: 0.85
+  evidence: GET /api/v1/potential-matches; schemas PotentialMatchDetail, PredictionResult
+  reason: Candidate duplicate-record pairs with match prediction scores for review — squarely MPI duplicate/overlay
+    resolution.
 - tag: persons
   spec_file: tuva-health-persons-api-openapi.yml
   capability_id: BC-2900.10
   capability_id_l1: BC-2900
   capability_name: Master Patient Index Management
-  confidence: 0.85
+  confidence: 0.8
   evidence: GET /api/v1/persons  Retrieve persons; schemas PersonRecord, PersonDetail, PersonSummary
-  reason: Retrieval of consolidated person entities and their constituent person records in an EMPI is
-    master patient index management for the provider.
+  reason: Retrieval of resolved person identities and their constituent records from the Tuva EMPI — master
+    patient index management.
 - tag: person-records
   spec_file: tuva-health-person-records-api-openapi.yml
   capability_id: BC-2900.10
@@ -48,6 +49,5 @@ edges:
   confidence: 0.75
   evidence: POST /api/v1/person-records/import  Import person records; POST /api/v1/person-records/export  Export
     person records
-  reason: Import/export of person records into the EMPI feeds and extracts the master patient index. Slight
-    ambiguity because bulk import/export is also generic data movement, hence moderate-high rather than
-    top confidence.
+  reason: Import/export of person records into the EMPI is the data-loading side of master patient index
+    stewardship. Slight ambiguity as it is generic bulk data movement, hence moderate confidence.
