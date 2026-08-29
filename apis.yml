@@ -277,6 +277,9 @@ apis:
   - type: Authentication
     url: authentication/tuva-health-authentication.yml
 common:
+- type: CapabilityMap
+  url: capabilities/tuva-health-capability-edges.yml
+  name: Tuva Health Business Capability Map
 - type: IssueTracker
   url: https://github.com/tuva-health/tuva/issues
 - type: Releases
