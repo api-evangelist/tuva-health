@@ -18,6 +18,19 @@ description: >-
   OCI images, so there is no Tuva-operated API host. The company pairs the open-source
   project with a commercial Core Platform and named services. Home market is the United
   States.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 image: https://www.tuvahealth.com/img/TuvaHealthLogo-White@4x.png
 tags:
 - Healthcare
@@ -264,6 +277,10 @@ apis:
   - type: Authentication
     url: authentication/tuva-health-authentication.yml
 common:
+- type: IssueTracker
+  url: https://github.com/tuva-health/tuva/issues
+- type: Releases
+  url: https://github.com/tuva-health/tuva/releases
 - type: DomainSecurity
   url: security/tuva-health-domain-security.yml
 - type: Website
