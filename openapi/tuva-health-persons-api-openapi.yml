@@ -1,0 +1,162 @@
+openapi: 3.2.0
+info:
+  title: Tuva EMPI Persons API
+  version: 1.0.0
+tags:
+- name: persons
+paths:
+  /api/v1/persons:
+    get:
+      operationId: persons_retrieve
+      description: Get/search for persons.
+      summary: Retrieve persons
+      tags:
+      - persons
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPersonsResponse'
+          description: ''
+  /api/v1/persons/{id}:
+    get:
+      operationId: persons_retrieve_2
+      description: Get Person by ID.
+      summary: Retrieve person by ID
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - persons
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPersonResponse'
+          description: ''
+components:
+  schemas:
+    PersonRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        person_id:
+          type: string
+        created:
+          type: string
+          format: date-time
+        person_updated:
+          type: string
+          format: date-time
+        matched_or_reviewed:
+          type: boolean
+        data_source:
+          type: string
+        source_person_id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        sex:
+          type: string
+        race:
+          type: string
+        birth_date:
+          type: string
+        death_date:
+          type: string
+        social_security_number:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+        county:
+          type: string
+        phone:
+          type: string
+      required:
+      - address
+      - birth_date
+      - city
+      - county
+      - created
+      - data_source
+      - death_date
+      - first_name
+      - id
+      - last_name
+      - matched_or_reviewed
+      - person_id
+      - person_updated
+      - phone
+      - race
+      - sex
+      - social_security_number
+      - source_person_id
+      - state
+      - zip_code
+    PersonDetail:
+      type: object
+      properties:
+        id:
+          type: string
+        created:
+          type: string
+          format: date-time
+        version:
+          type: integer
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonRecord'
+      required:
+      - created
+      - id
+      - records
+      - version
+    GetPersonResponse:
+      type: object
+      properties:
+        person:
+          $ref: '#/components/schemas/PersonDetail'
+      required:
+      - person
+    GetPersonsResponse:
+      type: object
+      properties:
+        persons:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonSummary'
+      required:
+      - persons
+    PersonSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        data_sources:
+          type: array
+          items:
+            type: string
+      required:
+      - data_sources
+      - first_name
+      - id
+      - last_name

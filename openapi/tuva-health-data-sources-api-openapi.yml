@@ -1,0 +1,39 @@
+openapi: 3.2.0
+info:
+  title: Tuva EMPI Data Sources API
+  version: 1.0.0
+tags:
+- name: data-sources
+paths:
+  /api/v1/data-sources:
+    get:
+      operationId: data_sources_retrieve
+      description: Get data sources.
+      summary: Retrieve data sources
+      tags:
+      - data-sources
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDataSourcesResponse'
+          description: ''
+components:
+  schemas:
+    DataSource:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    GetDataSourcesResponse:
+      type: object
+      properties:
+        data_sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSource'
+      required:
+      - data_sources

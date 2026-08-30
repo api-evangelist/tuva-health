@@ -1,0 +1,73 @@
+openapi: 3.2.0
+info:
+  title: Tuva EMPI Matches API
+  version: 1.0.0
+tags:
+- name: matches
+paths:
+  /api/v1/matches:
+    post:
+      operationId: matches_create
+      description: Create a person record match.
+      summary: Create match
+      tags:
+      - matches
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMatchRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Empty object
+                properties: {}
+          description: ''
+components:
+  schemas:
+    CreateMatchRequest:
+      type: object
+      properties:
+        potential_match_id:
+          type: string
+        potential_match_version:
+          type: integer
+        person_updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonUpdate'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonRecordComment'
+      required:
+      - person_updates
+      - potential_match_id
+      - potential_match_version
+    PersonUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: integer
+        new_person_record_ids:
+          type: array
+          items:
+            type: string
+      required:
+      - new_person_record_ids
+    PersonRecordComment:
+      type: object
+      properties:
+        person_record_id:
+          type: string
+        comment:
+          type: string
+      required:
+      - comment
+      - person_record_id

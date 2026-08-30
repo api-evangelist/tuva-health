@@ -1,0 +1,109 @@
+openapi: 3.2.0
+info:
+  title: Tuva EMPI Users API
+  version: 1.0.0
+tags:
+- name: users
+paths:
+  /api/v1/users:
+    get:
+      operationId: users_retrieve
+      description: Get User objects.
+      summary: Retrieve users
+      tags:
+      - users
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUsersResponse'
+          description: ''
+  /api/v1/users/{id}:
+    post:
+      operationId: users_create
+      description: Update User role.
+      summary: Update user role
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRoleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserRoleResponse'
+          description: ''
+components:
+  schemas:
+    UserSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+      required:
+      - email
+      - id
+      - role
+    UpdateUserRoleRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+        role:
+          oneOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          - $ref: '#/components/schemas/NullEnum'
+      required:
+      - role
+      - user_id
+    UpdatedUser:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    UpdateUserRoleResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UpdatedUser'
+      required:
+      - user
+    RoleEnum:
+      enum:
+      - admin
+      - member
+      type: string
+      description: '* `admin` - admin
+
+        * `member` - member'
+    GetUsersResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSummary'
+      required:
+      - users
+    NullEnum:
+      enum:
+      - null

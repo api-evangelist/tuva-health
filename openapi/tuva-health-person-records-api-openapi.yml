@@ -1,0 +1,77 @@
+openapi: 3.2.0
+info:
+  title: Tuva EMPI Person Records API
+  version: 1.0.0
+tags:
+- name: person-records
+paths:
+  /api/v1/person-records/export:
+    post:
+      operationId: person_records_export_create
+      description: Export person records to S3 in CSV format.
+      summary: Export person records
+      tags:
+      - person-records
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportPersonRecordsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Empty object
+                properties: {}
+          description: ''
+  /api/v1/person-records/import:
+    post:
+      operationId: person_records_import_create
+      description: Import person records from an S3 object.
+      summary: Import person records
+      tags:
+      - person-records
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportPersonRecordsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportPersonRecordsResponse'
+          description: ''
+components:
+  schemas:
+    ImportPersonRecordsResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+      required:
+      - job_id
+    ExportPersonRecordsRequest:
+      type: object
+      description: Mixin for validating S3 URIs.
+      properties:
+        s3_uri:
+          type: string
+      required:
+      - s3_uri
+    ImportPersonRecordsRequest:
+      type: object
+      description: Mixin for validating S3 URIs.
+      properties:
+        s3_uri:
+          type: string
+        config_id:
+          type: string
+      required:
+      - config_id
+      - s3_uri

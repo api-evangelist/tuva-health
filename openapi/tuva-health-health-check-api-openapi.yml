@@ -1,0 +1,23 @@
+openapi: 3.2.0
+info:
+  title: Tuva EMPI Health Check API
+  version: 1.0.0
+tags:
+- name: health-check
+paths:
+  /api/v1/health-check:
+    get:
+      operationId: health_check_retrieve
+      description: Check the health of the API.
+      summary: Retrieve health check
+      tags:
+      - health-check
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Empty object
+                properties: {}
+          description: ''

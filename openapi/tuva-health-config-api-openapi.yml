@@ -1,0 +1,134 @@
+openapi: 3.2.0
+info:
+  title: Tuva EMPI Config API
+  version: 1.0.0
+tags:
+- name: config
+paths:
+  /api/v1/config:
+    post:
+      operationId: config_create
+      description: Creates a Config object.
+      summary: Create config
+      tags:
+      - config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConfigRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateConfigResponse'
+          description: ''
+components:
+  schemas:
+    CreateConfigRequest:
+      type: object
+      properties:
+        splink_settings:
+          $ref: '#/components/schemas/SplinkSettings'
+        potential_match_threshold:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        auto_match_threshold:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+      required:
+      - auto_match_threshold
+      - potential_match_threshold
+      - splink_settings
+    Comparison:
+      type: object
+      properties:
+        output_column_name:
+          type: string
+        comparison_description:
+          type: string
+        comparison_levels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparisonLevel'
+      required:
+      - comparison_description
+      - comparison_levels
+      - output_column_name
+    SplinkSettings:
+      type: object
+      properties:
+        probability_two_random_records_match:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        em_convergence:
+          type: number
+          format: double
+          minimum: 0
+        max_iterations:
+          type: integer
+          minimum: 1
+        blocking_rules_to_generate_predictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockingRule'
+        comparisons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comparison'
+      required:
+      - blocking_rules_to_generate_predictions
+      - comparisons
+      - em_convergence
+      - max_iterations
+      - probability_two_random_records_match
+    ComparisonLevel:
+      type: object
+      properties:
+        sql_condition:
+          type: string
+        label_for_charts:
+          type: string
+        is_null_level:
+          type: boolean
+          default: false
+        m_probability:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        u_probability:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        tf_adjustment_column:
+          type: string
+        tf_adjustment_weight:
+          type: number
+          format: double
+      required:
+      - label_for_charts
+      - sql_condition
+    BlockingRule:
+      type: object
+      properties:
+        blocking_rule:
+          type: string
+      required:
+      - blocking_rule
+    CreateConfigResponse:
+      type: object
+      properties:
+        config_id:
+          type: string
+      required:
+      - config_id
