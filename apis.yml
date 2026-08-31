@@ -122,6 +122,8 @@ apis:
   humanURL: https://thetuvaproject.com/getting-started
   baseURL: https://{tuva-empi-host}/api/v1
   tags:
+  - Config
+  tags_raw:
   - config
   properties:
   - type: OpenAPI
@@ -142,6 +144,8 @@ apis:
   humanURL: https://thetuvaproject.com/getting-started
   baseURL: https://{tuva-empi-host}/api/v1
   tags:
+  - Data Sources
+  tags_raw:
   - data-sources
   properties:
   - type: OpenAPI
@@ -162,6 +166,8 @@ apis:
   humanURL: https://thetuvaproject.com/getting-started
   baseURL: https://{tuva-empi-host}/api/v1
   tags:
+  - Health Check
+  tags_raw:
   - health-check
   properties:
   - type: OpenAPI
@@ -182,6 +188,8 @@ apis:
   humanURL: https://thetuvaproject.com/getting-started
   baseURL: https://{tuva-empi-host}/api/v1
   tags:
+  - Matches
+  tags_raw:
   - matches
   properties:
   - type: OpenAPI
@@ -222,6 +230,8 @@ apis:
   humanURL: https://thetuvaproject.com/getting-started
   baseURL: https://{tuva-empi-host}/api/v1
   tags:
+  - Persons
+  tags_raw:
   - persons
   properties:
   - type: OpenAPI
@@ -262,6 +272,8 @@ apis:
   humanURL: https://thetuvaproject.com/getting-started
   baseURL: https://{tuva-empi-host}/api/v1
   tags:
+  - User
+  tags_raw:
   - users
   properties:
   - type: OpenAPI
