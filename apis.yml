@@ -289,6 +289,9 @@ apis:
   - type: Authentication
     url: authentication/tuva-health-authentication.yml
 common:
+- type: License
+  name: Apache-2.0
+  url: https://github.com/tuva-health/tuva/blob/main/LICENSE
 - type: CapabilityMap
   url: capabilities/tuva-health-capability-edges.yml
   name: Tuva Health Business Capability Map
