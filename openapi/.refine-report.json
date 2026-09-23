@@ -1,0 +1,44 @@
+{
+  "provider": "tuva-health",
+  "sources": [
+    "_original/tuva-health-empi-openapi-original.yml"
+  ],
+  "outputs": [
+    "tuva-health-config-api-openapi.yml",
+    "tuva-health-data-sources-api-openapi.yml",
+    "tuva-health-health-check-api-openapi.yml",
+    "tuva-health-matches-api-openapi.yml",
+    "tuva-health-person-records-api-openapi.yml",
+    "tuva-health-persons-api-openapi.yml",
+    "tuva-health-potential-matches-api-openapi.yml",
+    "tuva-health-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "tuva-health-empi-openapi-original.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tuva-health-empi-openapi-original.yml: declared missing tag: config",
+    "tuva-health-empi-openapi-original.yml: declared missing tag: data-sources",
+    "tuva-health-empi-openapi-original.yml: declared missing tag: health-check",
+    "tuva-health-empi-openapi-original.yml: declared missing tag: matches",
+    "tuva-health-empi-openapi-original.yml: declared missing tag: person-records",
+    "tuva-health-empi-openapi-original.yml: declared missing tag: persons",
+    "tuva-health-empi-openapi-original.yml: declared missing tag: potential-matches",
+    "tuva-health-empi-openapi-original.yml: declared missing tag: users",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/tuva-health-empi-openapi.yml: archived document superseded by a larger archived document",
+    "tuva-health-config-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tuva-health-data-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tuva-health-health-check-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tuva-health-matches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tuva-health-person-records-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tuva-health-persons-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tuva-health-potential-matches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tuva-health-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

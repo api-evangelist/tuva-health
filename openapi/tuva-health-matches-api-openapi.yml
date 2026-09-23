@@ -3,7 +3,7 @@ info:
   title: Tuva EMPI Matches API
   version: 1.0.0
 tags:
-- name: matches
+- name: Matches
 paths:
   /api/v1/matches:
     post:
@@ -11,7 +11,7 @@ paths:
       description: Create a person record match.
       summary: Create match
       tags:
-      - matches
+      - Matches
       requestBody:
         content:
           application/json:

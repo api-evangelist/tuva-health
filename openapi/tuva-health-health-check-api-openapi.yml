@@ -3,7 +3,7 @@ info:
   title: Tuva EMPI Health Check API
   version: 1.0.0
 tags:
-- name: health-check
+- name: Health Check
 paths:
   /api/v1/health-check:
     get:
@@ -11,7 +11,7 @@ paths:
       description: Check the health of the API.
       summary: Retrieve health check
       tags:
-      - health-check
+      - Health Check
       responses:
         '200':
           content:

@@ -41,6 +41,116 @@ paths:
           description: ''
 components:
   schemas:
+    PotentialMatchDetail:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        data_sources:
+          type: array
+          items:
+            type: string
+        max_match_probability:
+          type: number
+          format: double
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PredictionResult'
+        persons:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonDetail'
+      required:
+      - data_sources
+      - first_name
+      - id
+      - last_name
+      - max_match_probability
+      - persons
+      - results
+    GetPotentialMatchResponse:
+      type: object
+      properties:
+        potential_match:
+          $ref: '#/components/schemas/PotentialMatchDetail'
+      required:
+      - potential_match
+    PredictionResult:
+      type: object
+      properties:
+        id:
+          type: string
+        created:
+          type: string
+          format: date-time
+        match_probability:
+          type: number
+          format: double
+        person_record_l_id:
+          type: string
+        person_record_r_id:
+          type: string
+      required:
+      - created
+      - id
+      - match_probability
+      - person_record_l_id
+      - person_record_r_id
+    PersonDetail:
+      type: object
+      properties:
+        id:
+          type: string
+        created:
+          type: string
+          format: date-time
+        version:
+          type: integer
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonRecord'
+      required:
+      - created
+      - id
+      - records
+      - version
+    GetPotentialMatchesResponse:
+      type: object
+      properties:
+        potential_matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/PotentialMatchSummary'
+      required:
+      - potential_matches
+    PotentialMatchSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        data_sources:
+          type: array
+          items:
+            type: string
+        max_match_probability:
+          type: number
+          format: double
+      required:
+      - data_sources
+      - first_name
+      - id
+      - last_name
+      - max_match_probability
     PersonRecord:
       type: object
       properties:
@@ -107,113 +217,3 @@ components:
       - source_person_id
       - state
       - zip_code
-    PotentialMatchDetail:
-      type: object
-      properties:
-        id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        data_sources:
-          type: array
-          items:
-            type: string
-        max_match_probability:
-          type: number
-          format: double
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/PredictionResult'
-        persons:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonDetail'
-      required:
-      - data_sources
-      - first_name
-      - id
-      - last_name
-      - max_match_probability
-      - persons
-      - results
-    PersonDetail:
-      type: object
-      properties:
-        id:
-          type: string
-        created:
-          type: string
-          format: date-time
-        version:
-          type: integer
-        records:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonRecord'
-      required:
-      - created
-      - id
-      - records
-      - version
-    GetPotentialMatchResponse:
-      type: object
-      properties:
-        potential_match:
-          $ref: '#/components/schemas/PotentialMatchDetail'
-      required:
-      - potential_match
-    PotentialMatchSummary:
-      type: object
-      properties:
-        id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        data_sources:
-          type: array
-          items:
-            type: string
-        max_match_probability:
-          type: number
-          format: double
-      required:
-      - data_sources
-      - first_name
-      - id
-      - last_name
-      - max_match_probability
-    GetPotentialMatchesResponse:
-      type: object
-      properties:
-        potential_matches:
-          type: array
-          items:
-            $ref: '#/components/schemas/PotentialMatchSummary'
-      required:
-      - potential_matches
-    PredictionResult:
-      type: object
-      properties:
-        id:
-          type: string
-        created:
-          type: string
-          format: date-time
-        match_probability:
-          type: number
-          format: double
-        person_record_l_id:
-          type: string
-        person_record_r_id:
-          type: string
-      required:
-      - created
-      - id
-      - match_probability
-      - person_record_l_id
-      - person_record_r_id

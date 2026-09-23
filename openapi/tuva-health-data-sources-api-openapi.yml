@@ -3,7 +3,7 @@ info:
   title: Tuva EMPI Data Sources API
   version: 1.0.0
 tags:
-- name: data-sources
+- name: Data Sources
 paths:
   /api/v1/data-sources:
     get:
@@ -11,7 +11,7 @@ paths:
       description: Get data sources.
       summary: Retrieve data sources
       tags:
-      - data-sources
+      - Data Sources
       responses:
         '200':
           content:

@@ -3,7 +3,7 @@ info:
   title: Tuva EMPI Config API
   version: 1.0.0
 tags:
-- name: config
+- name: Config
 paths:
   /api/v1/config:
     post:
@@ -11,7 +11,7 @@ paths:
       description: Creates a Config object.
       summary: Create config
       tags:
-      - config
+      - Config
       requestBody:
         content:
           application/json:
@@ -27,6 +27,13 @@ paths:
           description: ''
 components:
   schemas:
+    BlockingRule:
+      type: object
+      properties:
+        blocking_rule:
+          type: string
+      required:
+      - blocking_rule
     CreateConfigRequest:
       type: object
       properties:
@@ -61,6 +68,13 @@ components:
       - comparison_description
       - comparison_levels
       - output_column_name
+    CreateConfigResponse:
+      type: object
+      properties:
+        config_id:
+          type: string
+      required:
+      - config_id
     SplinkSettings:
       type: object
       properties:
@@ -118,17 +132,3 @@ components:
       required:
       - label_for_charts
       - sql_condition
-    BlockingRule:
-      type: object
-      properties:
-        blocking_rule:
-          type: string
-      required:
-      - blocking_rule
-    CreateConfigResponse:
-      type: object
-      properties:
-        config_id:
-          type: string
-      required:
-      - config_id
