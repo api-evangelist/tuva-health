@@ -53,6 +53,34 @@ components:
       - auto_match_threshold
       - potential_match_threshold
       - splink_settings
+    ComparisonLevel:
+      type: object
+      properties:
+        sql_condition:
+          type: string
+        label_for_charts:
+          type: string
+        is_null_level:
+          type: boolean
+          default: false
+        m_probability:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        u_probability:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        tf_adjustment_column:
+          type: string
+        tf_adjustment_weight:
+          type: number
+          format: double
+      required:
+      - label_for_charts
+      - sql_condition
     Comparison:
       type: object
       properties:
@@ -104,31 +132,3 @@ components:
       - em_convergence
       - max_iterations
       - probability_two_random_records_match
-    ComparisonLevel:
-      type: object
-      properties:
-        sql_condition:
-          type: string
-        label_for_charts:
-          type: string
-        is_null_level:
-          type: boolean
-          default: false
-        m_probability:
-          type: number
-          format: double
-          maximum: 1
-          minimum: 0
-        u_probability:
-          type: number
-          format: double
-          maximum: 1
-          minimum: 0
-        tf_adjustment_column:
-          type: string
-        tf_adjustment_weight:
-          type: number
-          format: double
-      required:
-      - label_for_charts
-      - sql_condition

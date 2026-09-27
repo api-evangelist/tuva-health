@@ -29,6 +29,29 @@ paths:
           description: ''
 components:
   schemas:
+    PersonRecordComment:
+      type: object
+      properties:
+        person_record_id:
+          type: string
+        comment:
+          type: string
+      required:
+      - comment
+      - person_record_id
+    PersonUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: integer
+        new_person_record_ids:
+          type: array
+          items:
+            type: string
+      required:
+      - new_person_record_ids
     CreateMatchRequest:
       type: object
       properties:
@@ -48,26 +71,3 @@ components:
       - person_updates
       - potential_match_id
       - potential_match_version
-    PersonUpdate:
-      type: object
-      properties:
-        id:
-          type: string
-        version:
-          type: integer
-        new_person_record_ids:
-          type: array
-          items:
-            type: string
-      required:
-      - new_person_record_ids
-    PersonRecordComment:
-      type: object
-      properties:
-        person_record_id:
-          type: string
-        comment:
-          type: string
-      required:
-      - comment
-      - person_record_id

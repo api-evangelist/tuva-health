@@ -73,13 +73,6 @@ components:
       - max_match_probability
       - persons
       - results
-    GetPotentialMatchResponse:
-      type: object
-      properties:
-        potential_match:
-          $ref: '#/components/schemas/PotentialMatchDetail'
-      required:
-      - potential_match
     PredictionResult:
       type: object
       properties:
@@ -120,15 +113,6 @@ components:
       - id
       - records
       - version
-    GetPotentialMatchesResponse:
-      type: object
-      properties:
-        potential_matches:
-          type: array
-          items:
-            $ref: '#/components/schemas/PotentialMatchSummary'
-      required:
-      - potential_matches
     PotentialMatchSummary:
       type: object
       properties:
@@ -217,3 +201,19 @@ components:
       - source_person_id
       - state
       - zip_code
+    GetPotentialMatchesResponse:
+      type: object
+      properties:
+        potential_matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/PotentialMatchSummary'
+      required:
+      - potential_matches
+    GetPotentialMatchResponse:
+      type: object
+      properties:
+        potential_match:
+          $ref: '#/components/schemas/PotentialMatchDetail'
+      required:
+      - potential_match
