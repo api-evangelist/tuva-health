@@ -29,16 +29,6 @@ paths:
           description: ''
 components:
   schemas:
-    PersonRecordComment:
-      type: object
-      properties:
-        person_record_id:
-          type: string
-        comment:
-          type: string
-      required:
-      - comment
-      - person_record_id
     PersonUpdate:
       type: object
       properties:
@@ -52,6 +42,16 @@ components:
             type: string
       required:
       - new_person_record_ids
+    PersonRecordComment:
+      type: object
+      properties:
+        person_record_id:
+          type: string
+        comment:
+          type: string
+      required:
+      - comment
+      - person_record_id
     CreateMatchRequest:
       type: object
       properties:

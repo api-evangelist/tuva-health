@@ -34,25 +34,6 @@ components:
           type: string
       required:
       - blocking_rule
-    CreateConfigRequest:
-      type: object
-      properties:
-        splink_settings:
-          $ref: '#/components/schemas/SplinkSettings'
-        potential_match_threshold:
-          type: number
-          format: double
-          maximum: 1
-          minimum: 0
-        auto_match_threshold:
-          type: number
-          format: double
-          maximum: 1
-          minimum: 0
-      required:
-      - auto_match_threshold
-      - potential_match_threshold
-      - splink_settings
     ComparisonLevel:
       type: object
       properties:
@@ -96,13 +77,6 @@ components:
       - comparison_description
       - comparison_levels
       - output_column_name
-    CreateConfigResponse:
-      type: object
-      properties:
-        config_id:
-          type: string
-      required:
-      - config_id
     SplinkSettings:
       type: object
       properties:
@@ -132,3 +106,29 @@ components:
       - em_convergence
       - max_iterations
       - probability_two_random_records_match
+    CreateConfigResponse:
+      type: object
+      properties:
+        config_id:
+          type: string
+      required:
+      - config_id
+    CreateConfigRequest:
+      type: object
+      properties:
+        splink_settings:
+          $ref: '#/components/schemas/SplinkSettings'
+        potential_match_threshold:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        auto_match_threshold:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+      required:
+      - auto_match_threshold
+      - potential_match_threshold
+      - splink_settings

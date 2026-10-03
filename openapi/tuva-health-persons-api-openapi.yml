@@ -41,13 +41,24 @@ paths:
           description: ''
 components:
   schemas:
-    GetPersonResponse:
+    PersonSummary:
       type: object
       properties:
-        person:
-          $ref: '#/components/schemas/PersonDetail'
+        id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        data_sources:
+          type: array
+          items:
+            type: string
       required:
-      - person
+      - data_sources
+      - first_name
+      - id
+      - last_name
     PersonDetail:
       type: object
       properties:
@@ -67,24 +78,6 @@ components:
       - id
       - records
       - version
-    PersonSummary:
-      type: object
-      properties:
-        id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        data_sources:
-          type: array
-          items:
-            type: string
-      required:
-      - data_sources
-      - first_name
-      - id
-      - last_name
     PersonRecord:
       type: object
       properties:
@@ -151,6 +144,13 @@ components:
       - source_person_id
       - state
       - zip_code
+    GetPersonResponse:
+      type: object
+      properties:
+        person:
+          $ref: '#/components/schemas/PersonDetail'
+      required:
+      - person
     GetPersonsResponse:
       type: object
       properties:

@@ -73,6 +73,28 @@ components:
       - max_match_probability
       - persons
       - results
+    PotentialMatchSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        data_sources:
+          type: array
+          items:
+            type: string
+        max_match_probability:
+          type: number
+          format: double
+      required:
+      - data_sources
+      - first_name
+      - id
+      - last_name
+      - max_match_probability
     PredictionResult:
       type: object
       properties:
@@ -113,28 +135,6 @@ components:
       - id
       - records
       - version
-    PotentialMatchSummary:
-      type: object
-      properties:
-        id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        data_sources:
-          type: array
-          items:
-            type: string
-        max_match_probability:
-          type: number
-          format: double
-      required:
-      - data_sources
-      - first_name
-      - id
-      - last_name
-      - max_match_probability
     PersonRecord:
       type: object
       properties:
