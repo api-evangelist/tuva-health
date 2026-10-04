@@ -27,13 +27,21 @@ paths:
           description: ''
 components:
   schemas:
-    BlockingRule:
+    Comparison:
       type: object
       properties:
-        blocking_rule:
+        output_column_name:
           type: string
+        comparison_description:
+          type: string
+        comparison_levels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparisonLevel'
       required:
-      - blocking_rule
+      - comparison_description
+      - comparison_levels
+      - output_column_name
     ComparisonLevel:
       type: object
       properties:
@@ -62,21 +70,6 @@ components:
       required:
       - label_for_charts
       - sql_condition
-    Comparison:
-      type: object
-      properties:
-        output_column_name:
-          type: string
-        comparison_description:
-          type: string
-        comparison_levels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ComparisonLevel'
-      required:
-      - comparison_description
-      - comparison_levels
-      - output_column_name
     SplinkSettings:
       type: object
       properties:
@@ -132,3 +125,10 @@ components:
       - auto_match_threshold
       - potential_match_threshold
       - splink_settings
+    BlockingRule:
+      type: object
+      properties:
+        blocking_rule:
+          type: string
+      required:
+      - blocking_rule

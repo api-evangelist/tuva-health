@@ -49,6 +49,13 @@ paths:
           description: ''
 components:
   schemas:
+    ImportPersonRecordsResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+      required:
+      - job_id
     ExportPersonRecordsRequest:
       type: object
       description: Mixin for validating S3 URIs.
@@ -57,13 +64,6 @@ components:
           type: string
       required:
       - s3_uri
-    ImportPersonRecordsResponse:
-      type: object
-      properties:
-        job_id:
-          type: string
-      required:
-      - job_id
     ImportPersonRecordsRequest:
       type: object
       description: Mixin for validating S3 URIs.

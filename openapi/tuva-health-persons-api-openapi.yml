@@ -78,6 +78,22 @@ components:
       - id
       - records
       - version
+    GetPersonsResponse:
+      type: object
+      properties:
+        persons:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonSummary'
+      required:
+      - persons
+    GetPersonResponse:
+      type: object
+      properties:
+        person:
+          $ref: '#/components/schemas/PersonDetail'
+      required:
+      - person
     PersonRecord:
       type: object
       properties:
@@ -144,19 +160,3 @@ components:
       - source_person_id
       - state
       - zip_code
-    GetPersonResponse:
-      type: object
-      properties:
-        person:
-          $ref: '#/components/schemas/PersonDetail'
-      required:
-      - person
-    GetPersonsResponse:
-      type: object
-      properties:
-        persons:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonSummary'
-      required:
-      - persons
