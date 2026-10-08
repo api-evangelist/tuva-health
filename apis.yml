@@ -302,6 +302,8 @@ apis:
   - type: Authentication
     url: authentication/tuva-health-authentication.yml
 common:
+- type: RateLimits
+  url: rate-limits/tuva-health-rate-limits.yml
 - url: https://www.tuvahealth.com/news
   type: Blog
 - type: License
