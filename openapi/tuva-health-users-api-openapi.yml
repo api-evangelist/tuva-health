@@ -47,14 +47,6 @@ paths:
           description: ''
 components:
   schemas:
-    RoleEnum:
-      enum:
-      - admin
-      - member
-      type: string
-      description: '* `admin` - admin
-
-        * `member` - member'
     UpdatedUser:
       type: object
       properties:
@@ -62,9 +54,6 @@ components:
           type: string
       required:
       - id
-    NullEnum:
-      enum:
-      - null
     UpdateUserRoleResponse:
       type: object
       properties:
@@ -98,6 +87,9 @@ components:
       required:
       - role
       - user_id
+    NullEnum:
+      enum:
+      - null
     GetUsersResponse:
       type: object
       properties:
@@ -107,3 +99,11 @@ components:
             $ref: '#/components/schemas/UserSummary'
       required:
       - users
+    RoleEnum:
+      enum:
+      - admin
+      - member
+      type: string
+      description: '* `admin` - admin
+
+        * `member` - member'

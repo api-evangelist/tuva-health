@@ -56,14 +56,6 @@ components:
           type: string
       required:
       - job_id
-    ExportPersonRecordsRequest:
-      type: object
-      description: Mixin for validating S3 URIs.
-      properties:
-        s3_uri:
-          type: string
-      required:
-      - s3_uri
     ImportPersonRecordsRequest:
       type: object
       description: Mixin for validating S3 URIs.
@@ -74,4 +66,12 @@ components:
           type: string
       required:
       - config_id
+      - s3_uri
+    ExportPersonRecordsRequest:
+      type: object
+      description: Mixin for validating S3 URIs.
+      properties:
+        s3_uri:
+          type: string
+      required:
       - s3_uri
